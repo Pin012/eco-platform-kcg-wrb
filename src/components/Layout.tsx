@@ -29,6 +29,7 @@ export default function Layout() {
   const [activeBranch, setActiveBranch] = React.useState(() => localStorage.getItem('WSP_ECO_ACTIVE_BRANCH') || '十河分署');
   const userMenuRef = React.useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const shouldShowFooter = location.pathname !== '/plants';
 
   React.useEffect(() => {
     setIsMobileOpen(false);
@@ -145,9 +146,11 @@ export default function Layout() {
         {/* Workable Scrollable Area */}
         <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
           <Outlet />
-          <footer className="mt-auto py-6 px-8 text-right text-[11px] text-gray-500 shrink-0 select-none">
-            <span className="text-[#3A5A40]/80 font-bold tracking-wider">© 2026 WSP 生態檢核團隊</span>
-          </footer>
+          {shouldShowFooter && (
+            <footer className="mt-auto py-6 px-8 text-right text-[11px] text-gray-500 shrink-0 select-none">
+              <span className="text-[#3A5A40]/80 font-bold tracking-wider">© 2026 WSP 生態檢核團隊</span>
+            </footer>
+          )}
         </div>
       </main>
     </div>
