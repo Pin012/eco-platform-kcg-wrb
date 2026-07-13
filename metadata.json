@@ -1,0 +1,6 @@
+{
+  "name": "生態檢核資訊系統整合平台",
+  "description": "生態檢核整合工具與導航介面，提供關注議題、數位地圖、FAQ、植栽建議與 AI Bot 等功能模組。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
