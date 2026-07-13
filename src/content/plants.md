@@ -10,6 +10,7 @@ altitude: 低海拔 (0-500m)
 sunlight: 全日照
 soil: 砂質壤土 (排水佳)
 ### 九芎
+- imageFile: lagerstroemia-subcostata.jpg
 - image: https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?auto=format&fit=crop&w=600&q=80
 - type: 落葉喬木
 - tags: 原生種、耐旱、誘鳥
@@ -17,6 +18,7 @@ soil: 砂質壤土 (排水佳)
 - maintenance: 初期需澆灌與除草，成株後維護量低。
 
 ### 水柳
+- imageFile: salix-warburgii.jpg
 - image: https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80
 - type: 小喬木
 - tags: 親水、護岸、蜜源
@@ -29,6 +31,7 @@ altitude: 低海拔 (0-500m)
 sunlight: 半日照
 soil: 一般壤土
 ### 樟樹
+- imageFile: cinnamomum-camphora.jpg
 - image: https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=600&q=80
 - type: 常綠喬木
 - tags: 原生種、遮蔭、耐修剪
@@ -36,6 +39,7 @@ soil: 一般壤土
 - maintenance: 須預留根系與冠幅空間，避免過度密植。
 
 ### 月橘
+- imageFile: murraya-paniculata.jpg
 - image: https://images.unsplash.com/photo-1468327768560-75b778cbb551?auto=format&fit=crop&w=600&q=80
 - type: 灌木
 - tags: 常綠、誘蝶、綠籬
@@ -48,6 +52,7 @@ altitude: 中海拔 (500-1500m)
 sunlight: 全日照
 soil: 砂質壤土 (排水佳)
 ### 臺灣欒樹
+- imageFile: koelreuteria-henryi.jpg
 - image: https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80
 - type: 落葉喬木
 - tags: 原生種、景觀、耐旱
@@ -55,6 +60,7 @@ soil: 砂質壤土 (排水佳)
 - maintenance: 幼苗期需支架固定，颱風季前檢查樹勢。
 
 ### 山黃梔
+- imageFile: gardenia-jasminoides.jpg
 - image: https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=80
 - type: 灌木
 - tags: 原生種、誘鳥、坡地

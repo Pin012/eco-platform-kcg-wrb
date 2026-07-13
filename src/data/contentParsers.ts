@@ -19,6 +19,7 @@ export interface PlantRecommendationGroup {
   plants: Array<{
     name: string;
     image: string;
+    imageFile: string;
     type: string;
     tags: string[];
     summary: string;
@@ -94,6 +95,7 @@ export const parsePlantMarkdown = (content: string) => {
           return {
             name: plantLines[0].replace(/^###\s+/, '').trim(),
             image: readMetaValue(plantLines, '- image'),
+            imageFile: readMetaValue(plantLines, '- imageFile'),
             type: readMetaValue(plantLines, '- type'),
             tags: readMetaValue(plantLines, '- tags').split('、').map((tag) => tag.trim()).filter(Boolean),
             summary: readMetaValue(plantLines, '- summary'),
