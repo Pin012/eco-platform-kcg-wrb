@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { HelpCircle, ChevronDown, ChevronRight, Hash } from 'lucide-react';
-import { faqData } from '../data/faqData';
+import { faqData, faqMeta } from '../data/faqData';
 
 export default function FAQList() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
@@ -35,7 +35,7 @@ export default function FAQList() {
              生態檢核作業 FAQ 工具
           </h2>
           <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
-            總題數：58｜最後更新時間：2026-04-20
+            總題數：{faqData.reduce((total, category) => total + category.items.length, 0)}｜最後更新時間：{faqMeta.lastUpdated}
           </p>
         </div>
       </motion.div>

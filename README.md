@@ -24,7 +24,7 @@
 | 路由 | React Router DOM 7 |
 | 動畫 | motion |
 | 圖示 | lucide-react |
-| 主要資料來源 | 前端靜態資料檔 `src/data/*` |
+| 主要資料來源 | 易維護內容檔 `src/content/*`，由 `src/data/*` 轉成前端資料 |
 | 後端 API | 需確認；目前 `src` 未看到實際 API 呼叫 |
 | 資料庫 | 需確認；目前未看到 Supabase、D1、PostgreSQL 等資料庫設定 |
 | Cloudflare / Wrangler | 需確認；目前專案內未看到 `wrangler.toml` |
@@ -52,9 +52,15 @@
     ├── components
     │   ├── Layout.tsx
     │   └── ContourOverlay.tsx
+    ├── content
+    │   ├── faq.md
+    │   ├── issues.json
+    │   └── plants.md
     ├── data
+    │   ├── contentParsers.ts
     │   ├── faqData.ts
-    │   └── issuesData.ts
+    │   ├── issuesData.ts
+    │   └── plantData.ts
     └── pages
         ├── Dashboard.tsx
         ├── DigitalMap.tsx
@@ -75,8 +81,13 @@
 | `src/pages/DigitalMap.tsx` | 數位地圖與座標查詢頁 |
 | `src/pages/FAQList.tsx` | FAQ 知識庫頁 |
 | `src/pages/PlantingSuggestion.tsx` | 植栽建議工具頁 |
-| `src/data/issuesData.ts` | 關注議題靜態資料 |
-| `src/data/faqData.ts` | FAQ 靜態資料 |
+| `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
+| `src/content/issues.json` | 關注議題資料，後續維護優先改此檔 |
+| `src/content/plants.md` | 植栽建議內容與圖片網址，後續維護優先改此檔 |
+| `src/data/contentParsers.ts` | 將 Markdown 內容轉成前端可用資料 |
+| `src/data/issuesData.ts` | 關注議題資料轉接檔，頁面 import 維持不變 |
+| `src/data/faqData.ts` | FAQ Markdown 轉接檔，頁面 import 維持不變 |
+| `src/data/plantData.ts` | 植栽 Markdown 轉接檔 |
 | `vite.config.ts` | Vite、React plugin、Tailwind plugin 與 alias 設定 |
 | `.env.example` | 環境變數範例；目前是否實際使用需確認 |
 
@@ -223,6 +234,24 @@ npm run preview
 Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 
 ---
+
+
+### 7.5 維護內容資料
+
+後續若只要替換 FAQ、植栽建議或關注議題資料，優先修改 `src/content` 內的內容檔，不需要改 React 頁面。
+
+| 內容 | 維護檔案 | 注意事項 |
+| --- | --- | --- |
+| FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
+| 植栽建議 | `src/content/plants.md` | 每組建議使用 `##`，每個植物使用 `###`；每個植物的 `- image` 可替換為正式圖片網址或放在 `public/` 後填入 `/檔名`。 |
+| 關注議題 | `src/content/issues.json` | 維持 JSON 陣列格式，欄位名稱需與現有頁面一致，例如 `facilities`、`type`、`issues`。 |
+
+修改後請依序執行：
+
+```bash
+npm run lint
+npm run build
+```
 
 ## 8. 路由與頁面
 
