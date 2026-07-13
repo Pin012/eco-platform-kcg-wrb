@@ -83,7 +83,7 @@
 | `src/pages/PlantingSuggestion.tsx` | 植栽建議工具頁 |
 | `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
 | `src/content/issues.json` | 關注議題資料，後續維護優先改此檔 |
-| `src/content/plants.md` | 植栽建議內容與圖片網址，後續維護優先改此檔 |
+| `src/content/plants.md` | 植栽建議內容、上傳圖片檔名與預設圖片網址，後續維護優先改此檔 |
 | `src/data/contentParsers.ts` | 將 Markdown 內容轉成前端可用資料 |
 | `src/data/issuesData.ts` | 關注議題資料轉接檔，頁面 import 維持不變 |
 | `src/data/faqData.ts` | FAQ Markdown 轉接檔，頁面 import 維持不變 |
@@ -243,7 +243,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 | 內容 | 維護檔案 | 注意事項 |
 | --- | --- | --- |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
-| 植栽建議 | `src/content/plants.md` | 每組建議使用 `##`，每個植物使用 `###`；每個植物的 `- image` 可替換為正式圖片網址或放在 `public/` 後填入 `/檔名`。 |
+| 植栽建議 | `src/content/plants.md`、`src/assets/plants/` | 每組建議使用 `##`，每個植物使用 `###`；優先在 `- imageFile` 填入放在 `src/assets/plants/` 的上傳圖片檔名，若查無該圖片檔，系統會退回使用 `- image` 的預設圖片網址。 |
 | 關注議題 | `src/content/issues.json` | 維持 JSON 陣列格式，欄位名稱需與現有頁面一致，例如 `facilities`、`type`、`issues`。 |
 
 修改後請依序執行：
