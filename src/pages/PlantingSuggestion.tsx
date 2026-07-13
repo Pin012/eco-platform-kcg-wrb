@@ -109,29 +109,31 @@ export default function PlantingSuggestion() {
           {filteredGroups.length > 0 ? (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
               {filteredGroups.map((group) => (
-                <article key={group.id} className="bg-white rounded-2xl border border-[#D8E2DC] shadow-sm overflow-hidden">
-                  <img src={group.image} alt={`${group.title}示意圖`} className="w-full h-44 object-cover" loading="lazy" />
-                  <div className="p-5">
+                <article key={group.id} className="bg-white rounded-2xl border border-[#D8E2DC] shadow-sm p-5">
                     <h4 className="font-bold text-[#1B3022] mb-2">{group.title}</h4>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {[group.altitude, group.sunlight, group.soil].map((tag) => <span key={tag} className="text-[11px] px-2.5 py-1 rounded-full bg-[#F2F5F0] text-[#3A5A40] border border-[#D8E2DC]">{tag}</span>)}
                     </div>
                     <div className="space-y-3">
                       {group.plants.map((plant) => (
-                        <section key={plant.name} className="rounded-xl bg-[#FBFBFB] border border-gray-100 p-4">
-                          <div className="flex items-center justify-between gap-3 mb-2">
-                            <h5 className="font-bold text-sm text-[#2D3436]">{plant.name}</h5>
-                            <span className="text-[11px] text-gray-500">{plant.type}</span>
-                          </div>
-                          <p className="text-xs text-gray-600 leading-relaxed mb-2">{plant.summary}</p>
-                          <p className="text-[11px] text-gray-500 leading-relaxed">維護：{plant.maintenance}</p>
-                          <div className="flex flex-wrap gap-1.5 mt-3">
-                            {plant.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{tag}</span>)}
+                        <section key={plant.name} className="rounded-xl bg-[#FBFBFB] border border-gray-100 p-3 sm:p-4">
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <img src={plant.image} alt={`${plant.name}植栽示意圖`} className="w-full sm:w-32 h-32 object-cover rounded-xl border border-gray-200 bg-white shrink-0" loading="lazy" />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between gap-3 mb-2">
+                                <h5 className="font-bold text-sm text-[#2D3436]">{plant.name}</h5>
+                                <span className="text-[11px] text-gray-500 shrink-0">{plant.type}</span>
+                              </div>
+                              <p className="text-xs text-gray-600 leading-relaxed mb-2">{plant.summary}</p>
+                              <p className="text-[11px] text-gray-500 leading-relaxed">維護：{plant.maintenance}</p>
+                              <div className="flex flex-wrap gap-1.5 mt-3">
+                                {plant.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{tag}</span>)}
+                              </div>
+                            </div>
                           </div>
                         </section>
                       ))}
                     </div>
-                  </div>
                 </article>
               ))}
             </div>

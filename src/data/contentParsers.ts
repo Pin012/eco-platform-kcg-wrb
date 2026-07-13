@@ -16,9 +16,9 @@ export interface PlantRecommendationGroup {
   altitude: string;
   sunlight: string;
   soil: string;
-  image: string;
   plants: Array<{
     name: string;
+    image: string;
     type: string;
     tags: string[];
     summary: string;
@@ -93,6 +93,7 @@ export const parsePlantMarkdown = (content: string) => {
           const plantLines = plantBlock.split('\n');
           return {
             name: plantLines[0].replace(/^###\s+/, '').trim(),
+            image: readMetaValue(plantLines, '- image'),
             type: readMetaValue(plantLines, '- type'),
             tags: readMetaValue(plantLines, '- tags').split('、').map((tag) => tag.trim()).filter(Boolean),
             summary: readMetaValue(plantLines, '- summary'),
@@ -106,7 +107,6 @@ export const parsePlantMarkdown = (content: string) => {
         altitude: readMetaValue(metaLines, 'altitude'),
         sunlight: readMetaValue(metaLines, 'sunlight'),
         soil: readMetaValue(metaLines, 'soil'),
-        image: readMetaValue(metaLines, 'image'),
         plants,
       };
     });
