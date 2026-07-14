@@ -31,9 +31,9 @@
 }
 
 
-/* Accessibility: keep every page readable; override Tailwind small/responsive text utilities. */
+/* Accessibility: keep text readable without flattening heading hierarchy. */
 body {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 [class*="text-xs"],
@@ -46,18 +46,35 @@ body {
 [class*="text-[13px]"],
 [class*="text-[14px]"],
 [class*="text-[15px]"] {
-  font-size: 1.125rem !important;
-  line-height: 1.7rem !important;
+  font-size: 1rem !important;
+  line-height: 1.55rem !important;
 }
 
 [class*="text-lg"] {
-  font-size: 1.25rem !important;
-  line-height: 1.85rem !important;
+  font-size: 1.1875rem !important;
+  line-height: 1.75rem !important;
+}
+
+.dashboard-tool-title {
+  font-size: clamp(1.45rem, 2.4vw, 2.15rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-tool-description {
+  font-size: clamp(1rem, 1.15vw, 1.125rem) !important;
+  line-height: 1.65 !important;
+}
+
+.dashboard-tool-meta,
+.dashboard-tool-action {
+  font-size: clamp(0.95rem, 1vw, 1.05rem) !important;
+  line-height: 1.45 !important;
 }
 
 @media (max-width: 640px) {
   body {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   [class*="text-xs"],
@@ -70,12 +87,17 @@ body {
   [class*="text-[13px]"],
   [class*="text-[14px]"],
   [class*="text-[15px]"] {
-    font-size: 1.1875rem !important;
-    line-height: 1.85rem !important;
+    font-size: 1.0625rem !important;
+    line-height: 1.65rem !important;
   }
 
   [class*="text-lg"] {
+    font-size: 1.25rem !important;
+    line-height: 1.85rem !important;
+  }
+
+  .dashboard-tool-title {
     font-size: 1.35rem !important;
-    line-height: 2rem !important;
+    line-height: 1.25 !important;
   }
 }
