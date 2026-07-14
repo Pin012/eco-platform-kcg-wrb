@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+const brandIconSrc = '/brand-icon.png';
+
 const navItems = [
   { id: 'dashboard', path: '/', label: '首頁總覽', icon: LayoutDashboard },
   { id: 'issues', path: '/issues', label: '關注議題工具板', icon: MapPinned },
@@ -130,9 +132,15 @@ export default function Layout() {
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex items-center gap-2">
-              {/* placeholder for brand icon */}
-              <div className="w-7 h-7 flex items-center justify-center shrink-0">
-                <img src="/brand-icon.png" alt="Logo" className="w-full h-full object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
+              <div className="w-7 h-7 flex items-center justify-center shrink-0" aria-hidden="true">
+                <img
+                  src={brandIconSrc}
+                  alt=""
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
               <h1 className="text-[14px] sm:text-xl font-bold text-[#1B3022] tracking-tight block truncate max-w-[180px] sm:max-w-none">生態檢核資訊系統整合平台</h1>
             </div>
