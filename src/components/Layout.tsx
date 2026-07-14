@@ -233,7 +233,7 @@ export default function Layout() {
                   }}
                 />
               </div>
-              <h1 className="text-[14px] sm:text-xl font-bold text-[#1B3022] tracking-tight block truncate max-w-[180px] sm:max-w-none">生態檢核資訊系統整合平台</h1>
+              <h1 className="platform-title text-[14px] sm:text-xl font-bold text-[#1B3022] tracking-tight block truncate max-w-[240px] sm:max-w-none">生態檢核資訊系統整合平台</h1>
             </div>
           </div>
 

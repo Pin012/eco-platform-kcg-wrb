@@ -115,3 +115,16 @@ body {
   outline-offset: 4px;
   border-radius: 1rem;
 }
+
+.platform-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 640px) {
+  .platform-title {
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+  }
+}
