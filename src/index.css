@@ -33,22 +33,34 @@
 
 /* Accessibility: keep important/supporting text readable across every page. */
 body {
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .text-xs,
+.text-sm,
 [class*="text-[8px]"],
 [class*="text-[10px]"],
-[class*="text-[11px]"] {
-  font-size: 0.875rem !important;
-  line-height: 1.35rem !important;
+[class*="text-[11px]"],
+[class*="text-[13px]"],
+[class*="text-[14px]"] {
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
 }
 
 @media (max-width: 640px) {
+  body {
+    font-size: 18px;
+  }
+
+  .text-xs,
   .text-sm,
+  .text-base,
+  [class*="text-[8px]"],
+  [class*="text-[10px]"],
+  [class*="text-[11px]"],
   [class*="text-[13px]"],
   [class*="text-[14px]"] {
-    font-size: 1rem !important;
-    line-height: 1.45rem !important;
+    font-size: 1.0625rem !important;
+    line-height: 1.6rem !important;
   }
 }

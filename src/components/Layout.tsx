@@ -103,7 +103,6 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const shouldShowFooter = location.pathname !== '/plants';
-  const shouldShowHomeSearch = location.pathname === '/';
 
   React.useEffect(() => {
     setIsMobileOpen(false);
@@ -137,7 +136,7 @@ export default function Layout() {
 
     return siteSearchEntries
       .filter((entry) => `${entry.title} ${entry.description} ${entry.section}`.toLowerCase().includes(query))
-      .slice(0, 8);
+      .slice(0, 15);
   }, [searchQuery]);
 
   const handleResultClick = (path: string) => {
@@ -233,11 +232,9 @@ export default function Layout() {
               </div>
               <h1 className="text-[14px] sm:text-xl font-bold text-[#1B3022] tracking-tight block truncate max-w-[180px] sm:max-w-none">生態檢核資訊系統整合平台</h1>
             </div>
-            <span className="hidden md:inline-flex px-2 py-0.5 bg-[#E9EDC9] text-[#3A5A40] text-[10px] font-bold rounded uppercase tracking-widest leading-none items-center mt-1">v2.4.0 Production</span>
           </div>
 
-          {shouldShowHomeSearch && (
-            <div className="relative w-full lg:w-[420px] order-3 lg:order-none">
+          <div className="relative w-full lg:w-[420px] order-3 lg:order-none">
               <label htmlFor="siteSearch" className="sr-only">搜尋全站與 FAQ 內容</label>
               <div className="flex items-center gap-2 rounded-2xl border border-[#D8E2DC] bg-[#FBFBFB] px-4 py-2.5 shadow-sm focus-within:border-[#588157] focus-within:ring-2 focus-within:ring-[#A3B18A]/30 transition-all">
                 <Search className="w-5 h-5 text-[#588157] shrink-0" />
@@ -274,10 +271,6 @@ export default function Layout() {
                   )}
                 </div>
               )}
-            </div>
-          )}
-          <div className="flex items-center gap-4 sm:gap-6">
-            {/* Branch selector removed as requested */}
           </div>
         </header>
         
