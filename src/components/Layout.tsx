@@ -132,7 +132,7 @@ export default function Layout() {
             <div className="flex items-center gap-2">
               {/* placeholder for brand icon */}
               <div className="w-7 h-7 flex items-center justify-center shrink-0">
-                <img src="/brand-icon.png" alt="Logo" className="w-full h-full object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
+                <img src="/brand-logo-placeholder.svg" alt="Logo" className="w-full h-full object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
               </div>
               <h1 className="text-[14px] sm:text-xl font-bold text-[#1B3022] tracking-tight block truncate max-w-[180px] sm:max-w-none">生態檢核資訊系統整合平台</h1>
             </div>

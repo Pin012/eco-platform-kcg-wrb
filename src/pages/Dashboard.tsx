@@ -57,6 +57,16 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 lg:p-6 lg:px-8 w-full max-w-[1360px] mx-auto min-h-full flex flex-col">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl border border-[#D8E2DC] bg-white shadow-sm flex items-center justify-center shrink-0 p-1.5">
+          <img src="/brand-logo-placeholder.svg" alt="Logo 保留位" className="w-full h-full object-contain" />
+        </div>
+        <div>
+          <p className="text-[10px] sm:text-xs font-bold text-[#588157] uppercase tracking-[0.2em]">Dashboard</p>
+          <h2 className="text-lg sm:text-2xl font-bold text-[#1B3022] tracking-tight">首頁總覽</h2>
+        </div>
+      </div>
+
       {/* High Density Content Grid */}
       <div className="flex-1 grid grid-cols-2 lg:grid-cols-[repeat(13,minmax(0,1fr))] gap-2.5 sm:gap-3 pb-2">
         

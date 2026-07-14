@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">生態檢核平台 Logo 保留位</title>
+  <desc id="desc">A green rounded-square placeholder logo with leaf and map pin shapes.</desc>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#1B3022"/>
+  <rect x="8" y="8" width="48" height="48" rx="13" fill="#F2F5F0" fill-opacity="0.08"/>
+  <path d="M32 12C23.7 12 17 18.7 17 27c0 10.8 15 25 15 25s15-14.2 15-25c0-8.3-6.7-15-15-15Z" fill="#A3B18A"/>
+  <path d="M38.9 20.8c-7.9.6-14.6 5.7-16.3 13.6 5.9 2.2 14.4-.4 17.2-7.4 1-2.5.8-4.7-.9-6.2Z" fill="#FFD700"/>
+  <path d="M24.5 35.4c4.2-5.1 8.3-7.8 13.2-10.4" stroke="#1B3022" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="32" cy="27" r="4.5" fill="#1B3022" fill-opacity="0.9"/>
+</svg>
