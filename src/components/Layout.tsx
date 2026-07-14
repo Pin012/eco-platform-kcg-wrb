@@ -34,6 +34,7 @@ interface SearchResult {
   description: string;
   path: string;
   section: string;
+  targetId?: string;
 }
 
 const flattenText = (value: unknown): string => {
@@ -57,12 +58,14 @@ const siteSearchEntries: SearchResult[] = [
       description: category.description,
       path: '/faq',
       section: 'FAQ 類別',
+      targetId: `faq-section-${category.id}`,
     },
-    ...category.items.map((item) => ({
+    ...category.items.map((item, itemIdx) => ({
       title: item.question,
       description: item.answer.replace(/\s+/g, ' ').slice(0, 120),
       path: '/faq',
       section: `FAQ｜${category.title}`,
+      targetId: `faq-item-${category.id}-${itemIdx}`,
     })),
   ]),
   ...issuesData.map((issue) => ({
@@ -139,8 +142,8 @@ export default function Layout() {
       .slice(0, 15);
   }, [searchQuery]);
 
-  const handleResultClick = (path: string) => {
-    navigate(path);
+  const handleResultClick = (result: SearchResult) => {
+    navigate(result.path, { state: { siteSearch: { query: searchQuery.trim(), targetId: result.targetId } } });
     setSearchQuery('');
     setIsSearchOpen(false);
   };
@@ -258,7 +261,7 @@ export default function Layout() {
                         key={`${result.section}-${result.title}`}
                         type="button"
                         onMouseDown={(event) => event.preventDefault()}
-                        onClick={() => handleResultClick(result.path)}
+                        onClick={() => handleResultClick(result)}
                         className="w-full text-left rounded-xl px-3 py-3 hover:bg-[#F2F5F0] transition-colors"
                       >
                         <div className="text-sm font-bold text-[#588157] mb-1">{result.section}</div>

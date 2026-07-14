@@ -101,3 +101,17 @@ body {
     line-height: 1.25 !important;
   }
 }
+
+.site-search-highlight {
+  background: #fff3a3;
+  color: #1B3022;
+  border-radius: 0.25rem;
+  padding: 0 0.2rem;
+  box-shadow: inset 0 -0.15rem 0 #f2c94c;
+}
+
+.site-search-target {
+  outline: 3px solid rgba(242, 201, 76, 0.85);
+  outline-offset: 4px;
+  border-radius: 1rem;
+}
