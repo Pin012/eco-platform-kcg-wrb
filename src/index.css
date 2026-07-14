@@ -29,3 +29,102 @@
 .custom-scrollbar:active::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.35);
 }
+
+
+/* Accessibility: keep text readable without flattening heading hierarchy. */
+body {
+  font-size: 17px;
+}
+
+[class*="text-xs"],
+[class*="text-sm"],
+[class*="text-base"],
+[class*="text-[8px]"],
+[class*="text-[10px]"],
+[class*="text-[11px]"],
+[class*="text-[12px]"],
+[class*="text-[13px]"],
+[class*="text-[14px]"],
+[class*="text-[15px]"] {
+  font-size: 1rem !important;
+  line-height: 1.55rem !important;
+}
+
+[class*="text-lg"] {
+  font-size: 1.1875rem !important;
+  line-height: 1.75rem !important;
+}
+
+.dashboard-tool-title {
+  font-size: clamp(1.45rem, 2.4vw, 2.15rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-tool-description {
+  font-size: clamp(1rem, 1.15vw, 1.125rem) !important;
+  line-height: 1.65 !important;
+}
+
+.dashboard-tool-meta,
+.dashboard-tool-action {
+  font-size: clamp(0.95rem, 1vw, 1.05rem) !important;
+  line-height: 1.45 !important;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 18px;
+  }
+
+  [class*="text-xs"],
+  [class*="text-sm"],
+  [class*="text-base"],
+  [class*="text-[8px]"],
+  [class*="text-[10px]"],
+  [class*="text-[11px]"],
+  [class*="text-[12px]"],
+  [class*="text-[13px]"],
+  [class*="text-[14px]"],
+  [class*="text-[15px]"] {
+    font-size: 1.0625rem !important;
+    line-height: 1.65rem !important;
+  }
+
+  [class*="text-lg"] {
+    font-size: 1.25rem !important;
+    line-height: 1.85rem !important;
+  }
+
+  .dashboard-tool-title {
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+  }
+}
+
+.site-search-highlight {
+  background: #fff3a3;
+  color: #1B3022;
+  border-radius: 0.25rem;
+  padding: 0 0.2rem;
+  box-shadow: inset 0 -0.15rem 0 #f2c94c;
+}
+
+.site-search-target {
+  outline: 3px solid rgba(242, 201, 76, 0.85);
+  outline-offset: 4px;
+  border-radius: 1rem;
+}
+
+.platform-title {
+  font-size: clamp(1.18rem, 2vw, 1.55rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 640px) {
+  .platform-title {
+    font-size: 1.2rem !important;
+    line-height: 1.25 !important;
+  }
+}

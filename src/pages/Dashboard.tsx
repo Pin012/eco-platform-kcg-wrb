@@ -73,11 +73,11 @@ export default function Dashboard() {
             </div>
             <div className="flex-1 flex flex-col items-center sm:items-start justify-center sm:justify-between w-full text-center sm:text-left">
               <div className="flex flex-col items-center sm:items-start w-full">
-                <h3 className="font-bold text-[13px] sm:text-sm lg:text-2xl text-[#1B3022] sm:mb-1 lg:mb-2 tracking-tight leading-tight">{modIssues.title}</h3>
-                <p className="hidden sm:block text-xs lg:text-base text-gray-500 leading-snug lg:leading-relaxed mb-3 lg:mb-4 hover:text-gray-700">
+                <h3 className="dashboard-tool-title font-bold text-[13px] sm:text-sm lg:text-2xl text-[#1B3022] sm:mb-1 lg:mb-2 tracking-tight leading-tight">{modIssues.title}</h3>
+                <p className="dashboard-tool-description hidden sm:block text-xs lg:text-base text-gray-500 leading-snug lg:leading-relaxed mb-3 lg:mb-4 hover:text-gray-700">
                   {modIssues.description}
                 </p>
-                <div className="hidden sm:flex flex-wrap gap-1.5 lg:gap-2 text-[10px] lg:text-sm font-bold text-gray-600">
+                <div className="dashboard-tool-meta hidden sm:flex flex-wrap gap-1.5 lg:gap-2 text-[10px] lg:text-sm font-bold text-gray-600">
                    <span className="bg-gray-50 px-2 py-0.5 rounded border border-gray-100">📋 檢核表單彙整</span>
                    <span className="bg-gray-50 px-2 py-0.5 rounded border border-gray-100">⚠️ 干擾熱區評估</span>
                    <span className="bg-gray-50 px-2 py-0.5 rounded border border-gray-100">🦉 關注物種盤點</span>
@@ -87,7 +87,7 @@ export default function Dashboard() {
           </div>
           
           <div className="hidden sm:flex mt-3 justify-end w-full">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-[#FBFBFB] border border-[#D8E2DC] text-[#344E41] text-[10px] lg:text-sm font-bold rounded-lg group-hover:bg-[#F2F5F0] transition-colors ml-auto">
+            <span className="dashboard-tool-action inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-[#FBFBFB] border border-[#D8E2DC] text-[#344E41] text-[10px] lg:text-sm font-bold rounded-lg group-hover:bg-[#F2F5F0] transition-colors ml-auto">
               開啟工具板 <ArrowRight className="w-3 h-3" />
             </span>
           </div>
@@ -135,11 +135,11 @@ export default function Dashboard() {
              </div>
              <div className="flex-1 flex flex-col items-center sm:items-start justify-center sm:justify-start w-full text-center sm:text-left">
                <div className="flex flex-col items-center sm:items-start w-full">
-                 <h3 className="font-bold text-[13px] sm:text-sm lg:text-2xl text-white sm:mb-1.5 lg:mb-2 tracking-tight drop-shadow-md leading-tight">{modMap.title}</h3>
-                 <p className="hidden sm:block text-xs lg:text-base text-white/90 leading-snug lg:leading-relaxed max-w-sm lg:max-w-lg mb-3 lg:mb-4 drop-shadow-md font-medium">
+                 <h3 className="dashboard-tool-title font-bold text-[13px] sm:text-sm lg:text-2xl text-white sm:mb-1.5 lg:mb-2 tracking-tight drop-shadow-md leading-tight">{modMap.title}</h3>
+                 <p className="dashboard-tool-description hidden sm:block text-xs lg:text-base text-white/90 leading-snug lg:leading-relaxed max-w-sm lg:max-w-lg mb-3 lg:mb-4 drop-shadow-md font-medium">
                    {modMap.description}
                  </p>
-                 <div className="hidden sm:flex flex-wrap gap-1.5 lg:gap-2 text-[10px] lg:text-sm font-bold text-white/90">
+                 <div className="dashboard-tool-meta hidden sm:flex flex-wrap gap-1.5 lg:gap-2 text-[10px] lg:text-sm font-bold text-white/90">
                    <span className="bg-[#1B3022]/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-sm">📍 座標精準定位</span>
                    <span className="bg-[#1B3022]/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-sm">🗺️ 雙圖資同步比對</span>
                    <span className="bg-[#1B3022]/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/20 shadow-sm">🔍 生態敏感區套疊</span>
@@ -149,7 +149,7 @@ export default function Dashboard() {
            </div>
            
            <div className="hidden sm:flex mt-3 justify-end relative z-10 w-full">
-             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#588157]/60 backdrop-blur-md border border-white/20 text-white text-[10px] lg:text-sm font-bold rounded-lg shadow-sm group-hover:bg-[#588157]/80 transition-colors ml-auto">
+             <span className="dashboard-tool-action inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#588157]/60 backdrop-blur-md border border-white/20 text-white text-[10px] lg:text-sm font-bold rounded-lg shadow-sm group-hover:bg-[#588157]/80 transition-colors ml-auto">
                進入地圖系統 <ArrowRight className="w-3 h-3" />
              </span>
            </div>
@@ -175,13 +175,13 @@ export default function Dashboard() {
             </div>
             <div className="flex-1 flex flex-col items-center sm:items-start justify-center sm:justify-between w-full text-center sm:text-left">
                <div className="flex flex-col items-center sm:items-start w-full">
-                 <h3 className="text-white font-bold text-[13px] lg:text-2xl sm:mb-1 lg:mb-2 flex items-center justify-center sm:justify-start flex-wrap gap-1.5 transition-transform group-hover:translate-x-1 duration-300 leading-tight">
+                 <h3 className="dashboard-tool-title text-white font-bold text-[13px] lg:text-2xl sm:mb-1 lg:mb-2 flex items-center justify-center sm:justify-start flex-wrap gap-1.5 transition-transform group-hover:translate-x-1 duration-300 leading-tight">
                    <span className="truncate group-hover:text-[#FFD700] transition-colors">Ecocheck AI 智慧助手</span>
                    <span className="text-[8px] font-bold bg-green-500/20 text-green-400 border border-green-500/30 px-1.5 py-0.5 rounded shadow-sm animate-pulse tracking-wider uppercase shrink-0 min-w-max hidden sm:block">
                      Live API
                    </span>
                  </h3>
-                 <p className="hidden sm:block text-[#A3B18A] text-[10px] lg:text-base leading-snug lg:leading-relaxed line-clamp-2 transition-transform group-hover:translate-x-1 duration-300 delay-50">
+                 <p className="dashboard-tool-description hidden sm:block text-[#A3B18A] text-[10px] lg:text-base leading-snug lg:leading-relaxed line-clamp-2 transition-transform group-hover:translate-x-1 duration-300 delay-50">
                    隨時為您解答生態檢核流程與法規疑問，支援自然語言快速檢索。
                  </p>
                </div>
@@ -189,7 +189,7 @@ export default function Dashboard() {
           </div>
           
           <div className="hidden sm:flex mt-3 justify-end relative z-10 w-full">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#A3B18A] group-hover:bg-[#FFD700] text-[#1B3022] font-bold text-[10px] lg:text-sm rounded-lg transition-all shadow-sm ml-auto mt-1 sm:mt-0 group-hover:scale-105 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.3)]">
+            <span className="dashboard-tool-action inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#A3B18A] group-hover:bg-[#FFD700] text-[#1B3022] font-bold text-[10px] lg:text-sm rounded-lg transition-all shadow-sm ml-auto mt-1 sm:mt-0 group-hover:scale-105 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.3)]">
                前往對話 <ExternalLink className="w-3 h-3" />
             </span>
           </div>
@@ -208,11 +208,11 @@ export default function Dashboard() {
              </div>
              <div className="flex-1 flex flex-col items-center sm:items-start justify-center sm:justify-between w-full text-center sm:text-left">
                <div className="flex flex-col items-center sm:items-start w-full">
-                 <h3 className="text-[#1B3022] font-bold text-[13px] lg:text-xl sm:mb-1 lg:mb-2 leading-tight">{modFaq.title}</h3>
-                 <p className="hidden sm:block text-gray-500 text-[10px] lg:text-sm leading-snug lg:leading-relaxed mb-2.5 lg:mb-3 line-clamp-2">
+                 <h3 className="dashboard-tool-title text-[#1B3022] font-bold text-[13px] lg:text-xl sm:mb-1 lg:mb-2 leading-tight">{modFaq.title}</h3>
+                 <p className="dashboard-tool-description hidden sm:block text-gray-500 text-[10px] lg:text-sm leading-snug lg:leading-relaxed mb-2.5 lg:mb-3 line-clamp-2">
                    {modFaq.description}
                  </p>
-                 <div className="hidden sm:flex flex-wrap gap-1 lg:gap-1.5 text-[8px] lg:text-xs font-bold text-gray-500">
+                 <div className="dashboard-tool-meta hidden sm:flex flex-wrap gap-1 lg:gap-1.5 text-[8px] lg:text-xs font-bold text-gray-500">
                    <span className="bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">📚 法規流程</span>
                    <span className="bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">❓ 適用判斷</span>
                    <span className="bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100">💡 專家見解</span>
@@ -222,7 +222,7 @@ export default function Dashboard() {
            </div>
            
            <div className="hidden sm:flex mt-3 items-center justify-end w-full">
-             <div className="text-[10px] lg:text-sm font-bold text-[#588157] flex items-center group-hover:translate-x-1 transition-transform ml-auto">
+             <div className="dashboard-tool-action text-[10px] lg:text-sm font-bold text-[#588157] flex items-center group-hover:translate-x-1 transition-transform ml-auto">
                檢視清單 <ArrowRight className="w-2.5 h-2.5 ml-1" />
              </div>
            </div>
@@ -240,11 +240,11 @@ export default function Dashboard() {
              </div>
              <div className="flex-1 flex flex-col items-center sm:items-start justify-center sm:justify-between w-full text-center sm:text-left">
                <div className="flex flex-col items-center sm:items-start w-full">
-                 <h3 className="font-bold text-[13px] lg:text-xl sm:mb-1 lg:mb-2 text-[#1B3022] leading-tight">{modPlants.title}</h3>
-                 <p className="hidden sm:block text-[#3A5A40] text-[10px] lg:text-sm leading-snug lg:leading-relaxed mb-2.5 lg:mb-3 line-clamp-2 font-medium">
+                 <h3 className="dashboard-tool-title font-bold text-[13px] lg:text-xl sm:mb-1 lg:mb-2 text-[#1B3022] leading-tight">{modPlants.title}</h3>
+                 <p className="dashboard-tool-description hidden sm:block text-[#3A5A40] text-[10px] lg:text-sm leading-snug lg:leading-relaxed mb-2.5 lg:mb-3 line-clamp-2 font-medium">
                    {modPlants.description}
                  </p>
-                 <div className="hidden sm:flex flex-wrap gap-1 lg:gap-1.5 text-[8px] lg:text-xs font-bold text-[#2D4A32]">
+                 <div className="dashboard-tool-meta hidden sm:flex flex-wrap gap-1 lg:gap-1.5 text-[8px] lg:text-xs font-bold text-[#2D4A32]">
                      <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">🏔️ 海拔適應性</span>
                      <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">☀️ 日照條件</span>
                      <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">🌱 在地原生種</span>
@@ -254,7 +254,7 @@ export default function Dashboard() {
            </div>
            
            <div className="hidden sm:flex mt-3 items-center justify-end relative z-10 w-full">
-             <div className="text-[10px] lg:text-sm font-bold text-[#1B3022] flex items-center group-hover:translate-x-1 transition-transform ml-auto">
+             <div className="dashboard-tool-action text-[10px] lg:text-sm font-bold text-[#1B3022] flex items-center group-hover:translate-x-1 transition-transform ml-auto">
                開始分析 <ArrowRight className="w-2.5 h-2.5 ml-1 text-[#3A5A40]" />
              </div>
            </div>
