@@ -66,3 +66,11 @@ soil: 砂質壤土 (排水佳)
 - tags: 原生種、誘鳥、坡地
 - summary: 可作為坡地灌木層，提供果實與棲地遮蔽。
 - maintenance: 初期注意雜草競爭，成株後可粗放管理。
+
+### ABCABC
+- imageFile: gardenia-jasminoides.jpg
+- image: https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=80
+- type: 灌木
+- tags: 原生種、誘鳥、坡地
+- summary: 可作為坡地灌木層，提供果實與棲地遮蔽。
+- maintenance: 初期注意雜草競爭，成株後可粗放管理。
