@@ -55,7 +55,7 @@
     ├── content
     │   ├── map.md
     │   ├── faq.md
-    │   ├── issues.json
+    │   ├── issues.md
     │   └── plants.md
     ├── data
     │   ├── contentParsers.ts
@@ -85,7 +85,7 @@
 | `src/pages/PlantingSuggestion.tsx` | 植栽建議工具頁 |
 | `src/content/map.md` | 更換案件時修改地圖網址、預設座標及縮放層級 |
 | `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
-| `src/content/issues.json` | 關注議題資料，後續維護優先改此檔 |
+| `src/content/issues.md` | 關注議題資料，後續維護優先改此檔 |
 | `src/content/plants.md` | 植栽建議內容、上傳圖片檔名與預設圖片網址，後續維護優先改此檔 |
 | `src/data/contentParsers.ts` | 將 Markdown 內容轉成前端可用資料 |
 | `src/data/issuesData.ts` | 關注議題資料轉接檔，頁面 import 維持不變 |
@@ -249,7 +249,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 | 數位地圖 | `src/content/map.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
 | 植栽建議 | `src/content/plants.md`、`src/assets/plants/` | 每組建議使用 `##`，每個植物使用 `###`；優先在 `- imageFile` 填入放在 `src/assets/plants/` 的上傳圖片檔名，若查無該圖片檔，系統會退回使用 `- image` 的預設圖片網址。 |
-| 關注議題 | `src/content/issues.json` | 維持 JSON 陣列格式，欄位名稱需與現有頁面一致，例如 `facilities`、`type`、`issues`。 |
+| 關注議題 | `src/content/issues.md` | 每組資料使用 `## 設施名稱｜工程類型`；依範例填寫中文欄位，不需編輯 JSON。棲地與物種使用「、」分隔，每項保育原則使用一行 `- ` 清單。 |
 
 修改後請依序執行：
 
@@ -281,12 +281,43 @@ npm run build
 資料位於：
 
 ```text
-src/data/issuesData.ts
+src/content/issues.md
 ```
+
+不需要修改程式碼或 JSON。請依下列順序維護：
+
+1. 用文字編輯器開啟 `src/content/issues.md`。
+2. 找到既有的 `## 設施名稱｜工程類型` 區塊；若要新增組合，請複製一整個既有區塊再修改。
+3. 依照檔案內的中文欄位填入資料。棲地與物種之間使用全形頓號「、」分隔。
+4. 每個議題使用 `### 議題名稱`，每項生態保育原則各自使用一行 `- ` 清單。
+5. 儲存後執行 `npm run lint` 與 `npm run build`，再開啟 `/issues` 確認篩選與內容。
+
+可直接複製的最小範例如下：
+
+```markdown
+## 設施名稱｜工程類型
+
+- 設施簡介：請填寫
+- 敏感程度：低
+- 關注團體：請填寫
+- 棲地：河川、草生地
+- 物種：物種甲、物種乙
+
+### 議題名稱
+
+- 議題說明：請填寫
+
+#### 生態保育原則
+
+- [迴避] 請填寫措施
+- [減輕] 請填寫措施
+```
+
+> 請保留 `##`、`###`、`####`、中文欄位名稱、全形冒號「：」與標題中的全形直線「｜」，程式會依這些標記讀取資料。
 
 維護原則：
 
-1. 優先新增或修正既有資料欄位，不要任意改變資料結構。
+1. 優先新增或修正既有資料欄位，不要任意改變標題層級與欄位名稱。
 2. 修改後請確認 `/issues` 頁面的設施、類型篩選仍可正常運作。
 3. 若資料來源來自正式公文、調查報告或外部資料庫，請在 PR 說明中標示來源與更新日期。
 
