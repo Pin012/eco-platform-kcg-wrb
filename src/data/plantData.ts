@@ -1,27 +1,14 @@
-export interface PlantingSuggestion {
-  river: string; section: string; purpose: string; habitat: string[]; native: string[];
-  ecosystem: string[]; condition: string; risk: string[];
-  cards: Array<{ title: string; image: string; type: string; spacing: string; manage: string; note: string }>;
-}
+import plantsMarkdown from '../content/plants.md?raw';
+import { parsePlantMarkdown } from './contentParsers';
 
-const shared = {
-  estuary: { habitat: ['紅樹林', '草澤（蘆葦）', '沼澤', '河岸沙洲', '感潮水域'], native: ['水筆仔', '雲林莞草', '蘆葦', '濱刺麥', '白茅', '蔓荊', '黃槿', '苦楝', '林投', '飄拂草屬', '香蒲', '野荸薺'], ecosystem: ['棲地提供', '固碳（藍碳）'], condition: '植栽需適應鹽害、風害、乾旱。出口河段以濕地、沼澤生態系為主，適合水生或半水生植物；入口河段以草地及河岸沙洲生態系為主，適合潮濕耐淹或生長性強之植物。', risk: ['外來種入侵', '河漂垃圾', '潮間帶陸域化', '溼地陸域化'] },
-  upstream: { habitat: ['次生林'], native: ['大葉楠', '青剛櫟', '九芎', '山黃麻', '構樹'], ecosystem: ['棲地提供', '沖蝕防治', '洪水調節'], condition: '潮濕多雨', risk: ['棲地破碎化', '溪濱植被帶縮減'] },
-};
+const PLANT_IMAGE_DIRECTORY = '/images/planting-suggestions/';
 
-export const plantingSuggestions: PlantingSuggestion[] = [
-  { river:'淡水河', section:'二重疏洪道出口至海口', purpose:'固碳（藍碳）', ...shared.estuary, cards:[{image:'/images/planting-suggestions/tamsui-estuary-blue-carbon.webp', title:'固碳（藍碳）', type:'建議保留並維持現地灘地植栽，如紅樹林及蘆葦；為避免陸域化加劇，不建議新植。', spacing:'不建議新植', manage:'可配合工程移除外來種（互花米草等）。', note:'泥灘地、蘆葦草澤及紅樹林為本段重要生態系。工程設計應採最小干擾原則，並保留部分空間作為生態緩衝帶。' }] },
-  { river:'淡水河', section:'二重疏洪道出口至海口', purpose:'河岸防風', ...shared.estuary, cards:[{image:'/images/planting-suggestions/tamsui-estuary-windbreak.webp', title:'河岸防風', type:'黃槿、苦楝、白水木、欖仁樹', spacing:'黃槿 5 公尺；苦楝 3 公尺；白水木 3 公尺；欖仁樹 5 公尺。', manage:'若有營造棲地需求，可配合種植蘆葦叢，增加可用棲地面積。', note:'工程設計應採最小干擾原則。' }] },
-  { river:'淡水河', section:'二重疏洪道入口', purpose:'生態保育', habitat:['河岸沙洲','感潮水域','公園草地'], native:['山黃麻','山芙蓉','小葉桑','構樹','樟樹','蘆葦'], ecosystem:['景觀遊憩','棲地提供','揚塵抑制','水質淨化'], condition:'人為活動頻繁，原生植栽多以先驅植物及景觀植物為主。', risk:['潮溝陸域化'], cards:[{image:'/images/planting-suggestions/tamsui-erchong-conservation.webp',title:'生態保育',type:'為避免加速陸域化，應採自然演替為主。',spacing:'—',manage:'自然演替',note:'定期疏濬以維持小水鴨度冬棲地面積，避免陸域化。'}] },
-  { river:'大漢溪', section:'三峽河匯流口至新店溪匯流口', purpose:'生態保育', habitat:['公園草地','草澤','濕地'], native:['相思樹','樟樹','構樹','山黃麻','血桐','茄冬','水柳','宜梧'], ecosystem:['景觀遊憩','棲地提供'], condition:'人為活動頻繁，原生植栽多以先驅植物及景觀植物為主。', risk:['外來種入侵（布袋蓮、小花蔓澤蘭、銀合歡）'], cards:[{image:'/images/planting-suggestions/dahan-conservation.webp',title:'生態保育',type:'疏濬後建議採自然演替恢復植生。',spacing:'—',manage:'自然演替',note:'配合工程於 7 月前移除銀合歡，枝葉及表土帶離現場。'}] },
-  { river:'新店溪', section:'福和橋至匯流口', purpose:'生態保育', habitat:['草澤','河岸沙洲','濕地','公園草地','感潮水域'], native:['構樹','山黃麻','血桐','五節芒','蘆葦','茳茳鹹草','水燭'], ecosystem:['景觀遊憩','棲地提供'], condition:'人為活動頻繁，原生植栽多以先驅植物及景觀植物為主。', risk:['河漂垃圾','濕地陸域化','水質問題'], cards:[{image:'/images/planting-suggestions/xindian-fuhe-conservation.webp',title:'生態保育',type:'保護區可優先採自然演替恢復植生，減少人為干預。',spacing:'—',manage:'自然演替',note:'—'}] },
-  { river:'新店溪', section:'秀朗橋至福和橋', purpose:'生態保育', habitat:['公園草地','農田','濕地','河中沙洲','感潮水域'], native:['構樹','野桐','山黃麻'], ecosystem:['景觀遊憩','棲地提供'], condition:'人為活動頻繁，原生植栽多以先驅植物及景觀植物為主。', risk:['水質污染（有機物）'], cards:[{image:'/images/planting-suggestions/xindian-xiulang-conservation.webp',title:'生態保育',type:'自然演替',spacing:'—',manage:'河道疏濬後為降低淤積速度，建議不新植林木。',note:'河道整理可使用複式斷面，增加河道地形複雜性。'}] },
-  { river:'新店溪', section:'直潭至碧潭', purpose:'生物多樣性及景觀遊憩價值', habitat:['次生林','草澤','公園草地'], native:['臺北茜草樹','烏來柯','九芎','山黃麻','構樹','白匏仔','方莖金絲桃'], ecosystem:['棲地提供','景觀遊憩','沖蝕防治'], condition:'原生特有植物多分布於和美山及遠離河岸的次生林區。', risk:['溪濱植被帶縮減'], cards:[{image:'/images/planting-suggestions/xindian-bitan-biodiversity.webp',title:'生物多樣性及景觀遊憩價值',type:'楓香、九芎、苦楝、野牡丹、柏拉木、方莖金絲桃、烏來杜鵑、青剛櫟、烏來柯、山黃梔、白玉蘭',spacing:'喬木 2–5 公尺；灌木可密植或間距 1–2 公尺。',manage:'—',note:'優先考量賞花、賞果、落葉變色或具香氛的原生樹種。'}] },
-  { river:'新店溪', section:'屈尺至直潭', purpose:'固碳（綠碳）', habitat:['次生林','草澤','河中沙洲'], native:['臺北茜草樹','青剛櫟','大葉楠','山龍眼','水冬瓜'], ecosystem:['棲地提供','沖蝕防治','洪水調節','景觀遊憩'], condition:'潮濕多雨', risk:['棲地破碎化','溪濱植被帶縮減'], cards:[{image:'/images/planting-suggestions/xindian-quchi-green-carbon.webp',title:'固碳（綠碳）',type:'楓香、青楓、苦楝',spacing:'楓香 4 公尺；青楓 5 公尺；苦楝 4 公尺。',manage:'—',note:'—'}] },
-  { river:'新店溪', section:'屈尺至直潭', purpose:'景觀遊憩價值', habitat:['次生林','草澤','河中沙洲'], native:['臺北茜草樹','青剛櫟','大葉楠','山龍眼','水冬瓜'], ecosystem:['棲地提供','沖蝕防治','洪水調節','景觀遊憩'], condition:'潮濕多雨', risk:['棲地破碎化','溪濱植被帶縮減'], cards:[{image:'/images/planting-suggestions/xindian-quchi-recreation.webp',title:'景觀遊憩價值',type:'臺灣欒樹、九芎、野牡丹、柏拉木、方莖金絲桃',spacing:'九芎 2 公尺；灌木可密植或間距 1–2 公尺。',manage:'—',note:'臺灣欒樹建議以節點景觀營造為主，單株或少量種植。'}] },
-  { river:'新店溪', section:'下龜山橋以上上游', purpose:'固碳（綠碳）', ...shared.upstream, cards:[{image:'/images/planting-suggestions/xindian-guishan-green-carbon.webp',title:'固碳（綠碳）',type:'楓香、青楓、苦楝',spacing:'楓香 4 公尺；青楓 5 公尺；苦楝 4 公尺。',manage:'—',note:'—'}] },
-  { river:'新店溪', section:'下龜山橋以上上游', purpose:'生物多樣性價值', ...shared.upstream, cards:[{image:'/images/planting-suggestions/xindian-guishan-biodiversity.webp',title:'生物多樣性價值',type:'茄冬、青剛櫟、九芎、野牡丹、柏拉木、方莖金絲桃',spacing:'喬木 2–5 公尺；灌木可密植或間距 1–2 公尺。',manage:'—',note:'—'}] },
-  { river:'基隆河', section:'過港至四腳亭', purpose:'景觀遊憩價值', habitat:['溪濱高草','河中沙洲'], native:['山黃麻','構樹','高莖草'], ecosystem:['景觀遊憩價值'], condition:'需光亮高、較低土壤濕度及較高溫度。', risk:['外來種（銀合歡）','垃圾棄置'], cards:[{image:'/images/planting-suggestions/keelung-sijiaoting-recreation.webp',title:'景觀遊憩價值',type:'水柳',spacing:'3 公尺',manage:'配合工程於 7 月前移除銀合歡，枝葉及表土帶離現場。',note:'—'}] },
-  { river:'基隆河', section:'四腳亭至侯硐', purpose:'生態保育', habitat:['溪濱高草','次生林'], native:['水柳','高莖草'], ecosystem:['棲地提供'], condition:'降雨量較高、日照少，建議選植半日照、耐土壤濕潤物種。', risk:['垃圾棄置'], cards:[{image:'/images/planting-suggestions/keelung-houtong-conservation.webp',title:'生態保育',type:'水柳、香楠',spacing:'水柳 3 公尺；香楠 3 公尺，須注意褐根病害。',manage:'—',note:'—'}] },
-  { river:'橫溪', section:'海山橋至橫溪橋', purpose:'固碳（綠碳）', habitat:['竹林','菜園','溪濱高草','次生林','河中沙洲'], native:['桂竹','樟樹','相思樹','水柳','榕樹','山黃麻','青剛櫟'], ecosystem:['棲地提供','糧食提供'], condition:'需光亮高、較低土壤濕度及較高溫度。', risk:['外來種（銀合歡）','工廠放流水污染','垃圾棄置'], cards:[{image:'/images/planting-suggestions/hengxi-green-carbon.webp',title:'固碳（綠碳）',type:'桂竹、樟樹、青剛櫟、水柳、黃連木',spacing:'桂竹 4–5 公尺；低海拔闊葉林喬木 3 公尺。',manage:'避免銀合歡隨工程往上游入侵，並於 7 月前配合工程移除。',note:'維持橫向及縱向廊道通暢與溪濱植被帶完整，可導入自然解方設計。'}] },
-];
+const parsedPlants = parsePlantMarkdown(plantsMarkdown);
+
+export const plantingSuggestions = parsedPlants.suggestions.map((suggestion) => ({
+  ...suggestion,
+  cards: suggestion.cards.map(({ imageFile, ...card }) => ({
+    ...card,
+    image: imageFile ? `${PLANT_IMAGE_DIRECTORY}${imageFile}` : '',
+  })),
+}));

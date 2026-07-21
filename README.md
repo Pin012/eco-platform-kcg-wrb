@@ -86,7 +86,7 @@
 | `src/content/map.md` | 更換案件時修改地圖網址、預設座標及縮放層級 |
 | `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
 | `src/content/issues.md` | 關注議題資料，後續維護優先改此檔 |
-| `src/content/plants.md` | 植栽建議內容、上傳圖片檔名與預設圖片網址，後續維護優先改此檔 |
+| `src/content/plants.md` | 植栽建議的河川、河段、目的、環境資訊、建議內容與圖片檔名，後續維護優先改此檔 |
 | `src/data/contentParsers.ts` | 將 Markdown 內容轉成前端可用資料 |
 | `src/data/issuesData.ts` | 關注議題資料轉接檔，頁面 import 維持不變 |
 | `src/data/faqData.ts` | FAQ Markdown 轉接檔，頁面 import 維持不變 |
@@ -248,7 +248,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 | --- | --- | --- |
 | 數位地圖 | `src/content/map.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
-| 植栽建議 | `src/content/plants.md`、`src/assets/plants/` | 每組建議使用 `##`，每個植物使用 `###`；優先在 `- imageFile` 填入放在 `src/assets/plants/` 的上傳圖片檔名，若查無該圖片檔，系統會退回使用 `- image` 的預設圖片網址。 |
+| 植栽建議 | `src/content/plants.md`、`public/images/planting-suggestions/` | 每筆建議使用一個 `## 河川｜河段｜目的` 區塊；文字與圖片檔名皆在 Markdown 維護，圖片依原檔名放入指定 public 資料夾。完整步驟請見 `src/content/plants.md` 開頭。 |
 | 關注議題 | `src/content/issues.md` | 每組資料使用 `## 設施名稱｜工程類型`；依範例填寫中文欄位，不需編輯 JSON。棲地與物種使用「、」分隔，每項保育原則使用一行 `- ` 清單。 |
 
 修改後請依序執行：
