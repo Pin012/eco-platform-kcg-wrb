@@ -64,7 +64,8 @@ export const parseFrontmatter = (content: string) => {
 
 const readMetaValue = (lines: string[], key: string) => {
   const prefix = `${key}:`;
-  return lines.find((line) => line.startsWith(prefix))?.slice(prefix.length).trim() ?? '';
+  const line = lines.find((item) => item.replace(/^[-*]\s+/, '').startsWith(prefix));
+  return line?.replace(/^[-*]\s+/, '').slice(prefix.length).trim() ?? '';
 };
 
 export const parseFaqMarkdown = (content: string) => {
@@ -104,14 +105,15 @@ export const parsePlantMarkdown = (content: string) => {
   const splitList = (value: string) => value.split('、').map((item) => item.trim()).filter(Boolean);
   const suggestions: PlantingSuggestionContent[] = body
     .split(/\n(?=## )/g)
-    // Maintenance-guide headings do not contain these three required data fields.
-    .filter((block) => block.startsWith('## ') && /^河川:\s*\S+/m.test(block) && /^河段:\s*\S+/m.test(block) && /^目的:\s*\S+/m.test(block))
+    // A data heading contains exactly three parts; maintenance-guide headings are ignored.
+    .filter((block) => block.startsWith('## ') && block.split('\n', 1)[0].replace(/^##\s+/, '').split('｜').length === 3)
     .map((block) => {
       const lines = block.split('\n');
+      const [river, section, purpose] = lines[0].replace(/^##\s+/, '').split('｜').map((value) => value.trim());
       return {
-        river: readMetaValue(lines, '河川'),
-        section: readMetaValue(lines, '河段'),
-        purpose: readMetaValue(lines, '目的'),
+        river,
+        section,
+        purpose,
         habitat: splitList(readMetaValue(lines, '棲地類型')),
         native: splitList(readMetaValue(lines, '溪濱原生植物舉例')),
         ecosystem: splitList(readMetaValue(lines, '生態系統服務')),
