@@ -1,11 +1,31 @@
-import { useMemo, useState } from 'react';
-import { Image, Leaf, Search } from 'lucide-react';
+import { useMemo, useState, type ReactNode } from 'react';
+import { CircleAlert, Image, Leaf, Search, Sprout } from 'lucide-react';
 import { plantingSuggestions } from '../data/plantData';
 
-const InfoBlock = ({ label, value }: { label: string; value: string }) => (
-  <div className="min-h-14 rounded-lg border border-gray-200 bg-white px-4 py-3 leading-relaxed">
-    <strong className="mr-1 text-gray-600">{label}：</strong>{value || '—'}
-  </div>
+const TagBlock = ({ label, values, tone = 'green' }: { label: string; values: string[]; tone?: 'green' | 'warm' }) => (
+  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm">
+    <h3 className="mb-4 text-base font-bold text-[#667085]">{label}</h3>
+    <div className="flex flex-wrap gap-2.5">
+      {values.length > 0 ? values.map((value) => (
+        <span
+          key={value}
+          className={`rounded-full border px-4 py-2 text-sm font-medium ${tone === 'warm' ? 'border-[#E8D8CF] bg-[#F8F3F0] text-[#6B5144]' : 'border-[#DFE6E9] bg-[#EEF2F5] text-[#344E41]'}`}
+        >
+          {value}
+        </span>
+      )) : <span className="text-gray-400">—</span>}
+    </div>
+  </section>
+);
+
+const DetailBlock = ({ label, children, warning = false }: { label: string; children: ReactNode; warning?: boolean }) => (
+  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm sm:p-6">
+    <h3 className="mb-3 flex items-center gap-2 font-bold text-[#3A5A40]">
+      {warning ? <CircleAlert className="h-5 w-5 text-[#B7791F]" /> : <Sprout className="h-5 w-5 text-[#588157]" />}
+      {label}
+    </h3>
+    <div className="leading-relaxed text-gray-600">{children}</div>
+  </section>
 );
 
 export default function PlantingSuggestion() {
@@ -29,23 +49,29 @@ export default function PlantingSuggestion() {
         <p className="mt-2 text-gray-500">請依序選擇河川、河段位置與栽植目的，取得工區植栽及管理建議。</p>
       </header>
 
-      <div className="mb-6 flex flex-wrap gap-3 rounded-xl border border-gray-200 bg-white p-4">
-        <select aria-label="河川名稱" value={river} onChange={(e) => changeRiver(e.target.value)} className="min-w-44 rounded-md border border-gray-300 bg-white px-3 py-2"><option value="">選擇河川名稱</option>{rivers.map((value) => <option key={value}>{value}</option>)}</select>
-        <select aria-label="河段位置" value={section} onChange={(e) => changeSection(e.target.value)} className="min-w-60 rounded-md border border-gray-300 bg-white px-3 py-2"><option value="">選擇河段位置</option>{sections.map((value) => <option key={value}>{value}</option>)}</select>
-        <select aria-label="栽植目的" value={purpose} onChange={(e) => { setPurpose(e.target.value); setResult(null); }} className="min-w-52 rounded-md border border-gray-300 bg-white px-3 py-2"><option value="">選擇栽植目的</option>{purposes.map((value) => <option key={value}>{value}</option>)}</select>
-        <button onClick={search} className="flex items-center gap-2 rounded-md bg-[#fbc02d] px-5 py-2 font-bold text-gray-800 transition-colors hover:bg-[#f9a825]"><Search size={18} />搜尋</button>
+      <div className="mb-6 grid grid-cols-1 items-end gap-4 rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm md:grid-cols-2 xl:grid-cols-[1fr_1.35fr_1.15fr_auto]">
+        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">河川名稱<select value={river} onChange={(e) => changeRiver(e.target.value)} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇河川名稱</option>{rivers.map((value) => <option key={value}>{value}</option>)}</select></label>
+        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">河段位置<select value={section} onChange={(e) => changeSection(e.target.value)} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇河段位置</option>{sections.map((value) => <option key={value}>{value}</option>)}</select></label>
+        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">栽植目的<select value={purpose} onChange={(e) => { setPurpose(e.target.value); setResult(null); }} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇栽植目的</option>{purposes.map((value) => <option key={value}>{value}</option>)}</select></label>
+        <button onClick={search} className="flex items-center justify-center gap-2 rounded-xl bg-[#3A5A40] px-6 py-2.5 font-bold text-white shadow-sm transition-colors hover:bg-[#2D4A32]"><Search size={18} />搜尋</button>
       </div>
 
       {!result ? <div className="rounded-xl border border-dashed border-gray-300 bg-white p-12 text-center text-gray-500">請選擇條件後按下「搜尋」查看植栽建議。</div> : <>
-        <div className="mb-6 space-y-3">
-          <InfoBlock label="棲地類型" value={result.habitat.join('、')} />
-          <InfoBlock label="溪濱原生植物舉例" value={result.native.join('、')} />
-          <InfoBlock label="生態系統服務" value={result.ecosystem.join('、')} />
-          <InfoBlock label="適合環境條件" value={result.condition} />
-          <InfoBlock label="未來潛在風險" value={result.risk.join('、')} />
+        <div className="mb-8 space-y-5">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+            <TagBlock label="棲地類型" values={result.habitat} />
+            <TagBlock label="溪濱原生植物舉例" values={result.native} tone="warm" />
+            <TagBlock label="生態系統服務" values={result.ecosystem} />
+          </div>
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <DetailBlock label="適合環境條件">{result.condition || '—'}</DetailBlock>
+            <DetailBlock label="未來潛在風險" warning>
+              {result.risk.length > 0 ? <ul className="space-y-2">{result.risk.map((risk) => <li key={risk} className="flex gap-2"><span className="text-[#B7791F]">•</span><span>{risk}</span></li>)}</ul> : '—'}
+            </DetailBlock>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-6">
-          {result.cards.map((card) => <article key={card.title} className="w-full max-w-[520px] overflow-hidden rounded-xl border-2 border-[#fbc02d] bg-[#fffde7] shadow-sm">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+          {result.cards.map((card) => <article key={card.title} className="w-full overflow-hidden rounded-2xl border border-[#E5D49D] bg-[#fffdf4] shadow-sm">
             <div className="relative flex aspect-[16/7] items-center justify-center border-b border-[#fbc02d]/50 bg-white/70 text-[#b8860b]">
               <div className="text-center"><Image className="mx-auto mb-2" size={36} /><span className="font-bold">圖片預留位置</span></div>
               <img src={card.image} alt={`${card.title}植栽建議圖片`} className="absolute inset-0 h-full w-full object-cover" loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
