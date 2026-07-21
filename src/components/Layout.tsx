@@ -17,7 +17,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { faqData } from '../data/faqData';
 import { issuesData } from '../data/issuesData';
-import { plantMeta, plantRecommendationGroups } from '../data/plantData';
+import { plantingSuggestions } from '../data/plantData';
 
 const brandIconSrc = '/brand-icon.png';
 
@@ -74,26 +74,12 @@ const siteSearchEntries: SearchResult[] = [
     path: '/issues',
     section: '關注議題',
   })),
-  ...plantRecommendationGroups.flatMap((group) => [
-    {
-      title: group.title,
-      description: `${group.altitude} ${group.sunlight} ${group.soil} ${flattenText(group.plants)}`,
-      path: '/plants',
-      section: '植栽建議',
-    },
-    ...group.plants.map((plant) => ({
-      title: plant.name,
-      description: `${plant.type} ${plant.summary} ${plant.maintenance} ${plant.tags.join(' ')}`,
-      path: '/plants',
-      section: '植栽資料',
-    })),
-  ]),
-  {
-    title: plantMeta.title || '植栽建議工具',
-    description: `${plantMeta.note || ''} ${plantMeta.lastUpdated || ''}`,
+  ...plantingSuggestions.map((item) => ({
+    title: `${item.river}｜${item.section}｜${item.purpose}`,
+    description: flattenText(item),
     path: '/plants',
     section: '植栽建議',
-  },
+  })),
 ];
 
 export default function Layout() {
