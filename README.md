@@ -53,7 +53,7 @@
     │   ├── Layout.tsx
     │   └── ContourOverlay.tsx
     ├── content
-    │   ├── 00-地圖設定-請改這裡.md
+    │   ├── map.md
     │   ├── faq.md
     │   ├── issues.json
     │   └── plants.md
@@ -83,7 +83,7 @@
 | `src/pages/DigitalMap.tsx` | 數位地圖與座標查詢頁 |
 | `src/pages/FAQList.tsx` | FAQ 知識庫頁 |
 | `src/pages/PlantingSuggestion.tsx` | 植栽建議工具頁 |
-| `src/content/00-地圖設定-請改這裡.md` | 更換案件時修改地圖網址、預設座標及縮放層級 |
+| `src/content/map.md` | 更換案件時修改地圖網址、預設座標及縮放層級 |
 | `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
 | `src/content/issues.json` | 關注議題資料，後續維護優先改此檔 |
 | `src/content/plants.md` | 植栽建議內容、上傳圖片檔名與預設圖片網址，後續維護優先改此檔 |
@@ -246,7 +246,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 
 | 內容 | 維護檔案 | 注意事項 |
 | --- | --- | --- |
-| 數位地圖 | `src/content/00-地圖設定-請改這裡.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
+| 數位地圖 | `src/content/map.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
 | 植栽建議 | `src/content/plants.md`、`src/assets/plants/` | 每組建議使用 `##`，每個植物使用 `###`；優先在 `- imageFile` 填入放在 `src/assets/plants/` 的上傳圖片檔名，若查無該圖片檔，系統會退回使用 `- image` 的預設圖片網址。 |
 | 關注議題 | `src/content/issues.json` | 維持 JSON 陣列格式，欄位名稱需與現有頁面一致，例如 `facilities`、`type`、`issues`。 |

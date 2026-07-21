@@ -1,4 +1,4 @@
-import mapSettingsMarkdown from '../content/00-地圖設定-請改這裡.md?raw';
+import mapSettingsMarkdown from '../content/map.md?raw';
 
 const readSetting = (label: string) => {
   const prefix = `- ${label}:`;
@@ -6,7 +6,7 @@ const readSetting = (label: string) => {
   const value = line?.slice(prefix.length).trim();
 
   if (!value) {
-    throw new Error(`地圖設定缺少「${label}」，請檢查 src/content/00-地圖設定-請改這裡.md`);
+    throw new Error(`地圖設定缺少「${label}」，請檢查 src/content/map.md`);
   }
 
   return value;
