@@ -1,26 +1,14 @@
 import plantsMarkdown from '../content/plants.md?raw';
 import { parsePlantMarkdown } from './contentParsers';
 
-const uploadedPlantImages = import.meta.glob('../assets/plants/*.{png,jpg,jpeg,webp,svg}', {
-  eager: true,
-  import: 'default',
-  query: '?url',
-}) as Record<string, string>;
-
-const getUploadedPlantImage = (imageFile: string) => {
-  if (!imageFile) return '';
-  const normalizedImageFile = imageFile.replace(/^\/?/, '');
-  const matchedEntry = Object.entries(uploadedPlantImages).find(([path]) => path.endsWith(`/plants/${normalizedImageFile}`));
-  return matchedEntry?.[1] ?? '';
-};
+const PLANT_IMAGE_DIRECTORY = '/images/planting-suggestions/';
 
 const parsedPlants = parsePlantMarkdown(plantsMarkdown);
 
-export const plantMeta = parsedPlants.meta;
-export const plantRecommendationGroups = parsedPlants.groups.map((group) => ({
-  ...group,
-  plants: group.plants.map((plant) => ({
-    ...plant,
-    image: getUploadedPlantImage(plant.imageFile) || plant.image,
+export const plantingSuggestions = parsedPlants.suggestions.map((suggestion) => ({
+  ...suggestion,
+  cards: suggestion.cards.map(({ imageFile, ...card }) => ({
+    ...card,
+    image: imageFile ? `${PLANT_IMAGE_DIRECTORY}${imageFile}` : '',
   })),
 }));

@@ -27,6 +27,25 @@ export interface PlantRecommendationGroup {
   }>;
 }
 
+export interface PlantingSuggestionContent {
+  river: string;
+  section: string;
+  purpose: string;
+  habitat: string[];
+  native: string[];
+  ecosystem: string[];
+  condition: string;
+  risk: string[];
+  cards: Array<{
+    title: string;
+    imageFile: string;
+    type: string;
+    spacing: string;
+    manage: string;
+    note: string;
+  }>;
+}
+
 export const parseFrontmatter = (content: string) => {
   const match = content.match(/^---\n([\s\S]*?)\n---\n?/);
   const data: MarkdownFrontmatter = {};
@@ -82,41 +101,32 @@ export const parseFaqMarkdown = (content: string) => {
 
 export const parsePlantMarkdown = (content: string) => {
   const { data, body } = parseFrontmatter(content);
-  const groups: PlantRecommendationGroup[] = body
+  const splitList = (value: string) => value.split('、').map((item) => item.trim()).filter(Boolean);
+  const suggestions: PlantingSuggestionContent[] = body
     .split(/\n(?=## )/g)
-    // Recommendation groups always have an `id`; the maintenance guide does not.
-    .filter((block) => block.startsWith('## ') && /^id:\s*\S+/m.test(block))
+    // Maintenance-guide headings do not contain these three required data fields.
+    .filter((block) => block.startsWith('## ') && /^河川:\s*\S+/m.test(block) && /^河段:\s*\S+/m.test(block) && /^目的:\s*\S+/m.test(block))
     .map((block) => {
       const lines = block.split('\n');
-      const title = lines[0].replace(/^##\s+/, '').trim();
-      const firstPlantIndex = lines.findIndex((line) => line.startsWith('### '));
-      const metaLines = firstPlantIndex === -1 ? lines : lines.slice(0, firstPlantIndex);
-      const plantText = firstPlantIndex === -1 ? '' : lines.slice(firstPlantIndex).join('\n');
-      const plants = plantText
-        .split(/\n(?=### )/g)
-        .filter(Boolean)
-        .map((plantBlock) => {
-          const plantLines = plantBlock.split('\n');
-          return {
-            name: plantLines[0].replace(/^###\s+/, '').trim(),
-            image: readMetaValue(plantLines, '- image'),
-            imageFile: readMetaValue(plantLines, '- imageFile'),
-            type: readMetaValue(plantLines, '- type'),
-            tags: readMetaValue(plantLines, '- tags').split('、').map((tag) => tag.trim()).filter(Boolean),
-            summary: readMetaValue(plantLines, '- summary'),
-            maintenance: readMetaValue(plantLines, '- maintenance'),
-          };
-        });
-
       return {
-        id: readMetaValue(metaLines, 'id'),
-        title,
-        altitude: readMetaValue(metaLines, 'altitude'),
-        sunlight: readMetaValue(metaLines, 'sunlight'),
-        soil: readMetaValue(metaLines, 'soil'),
-        plants,
+        river: readMetaValue(lines, '河川'),
+        section: readMetaValue(lines, '河段'),
+        purpose: readMetaValue(lines, '目的'),
+        habitat: splitList(readMetaValue(lines, '棲地類型')),
+        native: splitList(readMetaValue(lines, '溪濱原生植物舉例')),
+        ecosystem: splitList(readMetaValue(lines, '生態系統服務')),
+        condition: readMetaValue(lines, '適合環境條件'),
+        risk: splitList(readMetaValue(lines, '未來潛在風險')),
+        cards: [{
+          title: readMetaValue(lines, '卡片標題'),
+          imageFile: readMetaValue(lines, '圖片檔名'),
+          type: readMetaValue(lines, '綠美化建議植栽類型'),
+          spacing: readMetaValue(lines, '栽植間距'),
+          manage: readMetaValue(lines, '其他管理措施'),
+          note: readMetaValue(lines, '備註'),
+        }],
       };
     });
 
-  return { meta: data, groups };
+  return { meta: data, suggestions };
 };
