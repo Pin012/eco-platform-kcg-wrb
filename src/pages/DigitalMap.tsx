@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Map, Search, Target, AlertCircle } from 'lucide-react';
-
-const MAP1_BASE = "https://www.google.com/maps/d/u/3/embed?mid=1hJgrT0tSOLSzSO5-THLGFvTAwxcgMLc&ehbc=2E312F";
-const MAP2_BASE = "https://www.google.com/maps/d/u/3/embed?mid=1ekHtwz0D-6-Q7lQyhUxJrAFl3mbdi_Q&ehbc=2E312F";
+import { mapSettings } from '../data/mapData';
 
 export default function DigitalMap() {
-  const [lat, setLat] = useState<number>(24.81172);
-  const [lng, setLng] = useState<number>(121.244369);
+  const [lat, setLat] = useState<number>(mapSettings.defaultLatitude);
+  const [lng, setLng] = useState<number>(mapSettings.defaultLongitude);
   
-  const [inputLat, setInputLat] = useState<string>('24.81172');
-  const [inputLng, setInputLng] = useState<string>('121.244369');
+  const [inputLat, setInputLat] = useState<string>(String(mapSettings.defaultLatitude));
+  const [inputLng, setInputLng] = useState<string>(String(mapSettings.defaultLongitude));
   
   const [error, setError] = useState<string>('');
 
@@ -41,8 +39,6 @@ export default function DigitalMap() {
       handleSearch();
     }
   };
-
-  const mapConfig = { z: 15 };
 
   return (
     <div className="p-4 lg:p-8 w-full max-w-none h-full flex flex-col">
@@ -76,7 +72,7 @@ export default function DigitalMap() {
             onChange={(e) => setInputLng(e.target.value)}
             onKeyDown={handleKeyDown}
             className="w-full px-4 py-2.5 bg-[#FBFBFB] border border-gray-200 rounded-xl text-sm text-gray-700 outline-none focus:border-[#A3B18A] transition-colors"
-            placeholder="例如：121.244369"
+            placeholder={`例如：${mapSettings.defaultLongitude}`}
           />
         </div>
 
@@ -90,7 +86,7 @@ export default function DigitalMap() {
             onChange={(e) => setInputLat(e.target.value)}
             onKeyDown={handleKeyDown}
             className="w-full px-4 py-2.5 bg-[#FBFBFB] border border-gray-200 rounded-xl text-sm text-gray-700 outline-none focus:border-[#A3B18A] transition-colors"
-            placeholder="例如：24.811720"
+            placeholder={`例如：${mapSettings.defaultLatitude}`}
           />
         </div>
 
@@ -128,7 +124,7 @@ export default function DigitalMap() {
           <div className="relative flex-1 w-full rounded-2xl overflow-hidden border border-[#D8E2DC] shadow-sm bg-gray-50 min-h-[300px] lg:min-h-[500px]">
             <iframe
               key={`map1-${mapKeys}`}
-              src={`${MAP1_BASE}&ll=${lat},${lng}&z=${mapConfig.z}`}
+              src={`${mapSettings.firstMapUrl}&ll=${lat},${lng}&z=${mapSettings.defaultZoom}`}
               title="本地圖可初步用於快速判別工程是否需辦理生態檢核"
               className="absolute inset-0 w-full h-full border-none"
               loading="lazy"
@@ -147,7 +143,7 @@ export default function DigitalMap() {
           <div className="relative flex-1 w-full rounded-2xl overflow-hidden border border-[#D8E2DC] shadow-sm bg-gray-50 min-h-[300px] lg:min-h-[500px]">
             <iframe
               key={`map2-${mapKeys}`}
-              src={`${MAP2_BASE}&ll=${lat},${lng}&z=${mapConfig.z}`}
+              src={`${mapSettings.secondMapUrl}&ll=${lat},${lng}&z=${mapSettings.defaultZoom}`}
               title="本地圖可用於進一步確認工程範圍內與其周遭的生態資訊"
               className="absolute inset-0 w-full h-full border-none"
               loading="lazy"
