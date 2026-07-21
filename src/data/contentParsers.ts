@@ -51,7 +51,11 @@ const readMetaValue = (lines: string[], key: string) => {
 export const parseFaqMarkdown = (content: string) => {
   const { data, body } = parseFrontmatter(content);
   const categories: FAQCategory[] = [];
-  const categoryBlocks = body.split(/\n(?=## )/g).filter(Boolean);
+  // Content files include a plain-language maintenance guide before the first data block.
+  // Only level-2 blocks with an `id` field are data records; guide headings are ignored.
+  const categoryBlocks = body
+    .split(/\n(?=## )/g)
+    .filter((block) => block.startsWith('## ') && /^id:\s*\S+/m.test(block));
 
   categoryBlocks.forEach((block) => {
     const lines = block.split('\n');
@@ -80,7 +84,8 @@ export const parsePlantMarkdown = (content: string) => {
   const { data, body } = parseFrontmatter(content);
   const groups: PlantRecommendationGroup[] = body
     .split(/\n(?=## )/g)
-    .filter(Boolean)
+    // Recommendation groups always have an `id`; the maintenance guide does not.
+    .filter((block) => block.startsWith('## ') && /^id:\s*\S+/m.test(block))
     .map((block) => {
       const lines = block.split('\n');
       const title = lines[0].replace(/^##\s+/, '').trim();
