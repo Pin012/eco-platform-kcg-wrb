@@ -7,7 +7,7 @@
 - 第一張地圖網址: https://www.google.com/maps/d/u/3/embed?mid=1hJgrT0tSOLSzSO5-THLGFvTAwxcgMLc&ehbc=2E312F
 - 第二張地圖網址: https://www.google.com/maps/d/u/3/embed?mid=1ekHtwz0D-6-Q7lQyhUxJrAFl3mbdi_Q&ehbc=2E312F
 
-請貼上可嵌入網頁的完整 Google My Maps 網址，不要只填地圖 ID。
+請貼上可嵌入網頁的完整 Google My Maps 網址。
 
 ## 開啟地圖時的預設位置
 
