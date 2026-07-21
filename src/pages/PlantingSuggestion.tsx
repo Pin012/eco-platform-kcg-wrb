@@ -70,9 +70,9 @@ export default function PlantingSuggestion() {
             </DetailBlock>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-          {result.cards.map((card) => <article key={card.title} className="w-full overflow-hidden rounded-2xl border border-[#E5D49D] bg-[#fffdf4] shadow-sm">
-            <div className="relative flex aspect-[16/7] items-center justify-center border-b border-[#fbc02d]/50 bg-white/70 text-[#b8860b]">
+        <div className="grid grid-cols-1 gap-6">
+          {result.cards.map((card) => <article key={card.title} className="grid w-full grid-cols-1 overflow-hidden rounded-2xl border border-[#E5D49D] bg-[#fffdf4] shadow-sm md:grid-cols-[minmax(220px,32%)_1fr]">
+            <div className="relative flex aspect-[16/7] max-h-56 items-center justify-center border-b border-[#fbc02d]/50 bg-white/70 text-[#b8860b] md:aspect-auto md:max-h-none md:min-h-full md:border-b-0 md:border-r">
               <div className="text-center"><Image className="mx-auto mb-2" size={36} /><span className="font-bold">圖片預留位置</span></div>
               <img src={card.image} alt={`${card.title}植栽建議圖片`} className="absolute inset-0 h-full w-full object-cover" loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
             </div>

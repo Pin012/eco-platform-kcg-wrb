@@ -248,7 +248,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 | --- | --- | --- |
 | 數位地圖 | `src/content/map.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
-| 植栽建議 | `src/content/plants.md`、`public/images/planting-suggestions/` | 每筆建議使用一個 `## 河川｜河段｜目的` 區塊；文字與圖片檔名皆在 Markdown 維護，圖片依原檔名放入指定 public 資料夾。完整步驟請見 `src/content/plants.md` 開頭。 |
+| 植栽建議 | `src/content/plants.md`、`public/images/planting-suggestions/` | 每筆建議使用一個 `## 河川｜河段｜目的` 區塊；河川、河段與目的不需在區塊內重複填寫，其餘欄位以每行一個 `- 欄位: 內容` 的清單格式維護。圖片依原檔名放入指定 public 資料夾，完整步驟請見 `src/content/plants.md` 開頭。 |
 | 關注議題 | `src/content/issues.md` | 每組資料使用 `## 設施名稱｜工程類型`；依範例填寫中文欄位，不需編輯 JSON。棲地與物種使用「、」分隔，每項保育原則使用一行 `- ` 清單。 |
 
 修改後請依序執行：
