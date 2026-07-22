@@ -38,7 +38,7 @@ export default function EcologicalMeasures() {
         </nav>
       </aside>
       <main className="min-w-0 space-y-5">
-        <h3 className="px-1 py-1 text-2xl font-bold text-[#31533A]">{activeMeasure.title}</h3>
+        <h3 className="rounded-2xl bg-[#E5EFE2] px-6 py-4 text-2xl font-bold text-[#31533A]">{activeMeasure.title}</h3>
         <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm sm:p-6">
           <h4 className="mb-4 flex items-center gap-2 text-xl font-bold text-[#31533A]"><CheckCircle2 className="h-5 w-5" />執行重點</h4><AdviceList items={activeMeasure.execution} />
         </section>
