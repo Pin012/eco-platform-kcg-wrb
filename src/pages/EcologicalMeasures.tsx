@@ -27,7 +27,7 @@ export default function EcologicalMeasures() {
   return <div className="h-full overflow-y-auto p-4 lg:p-8">
     <header className="mx-auto mb-6 max-w-7xl">
       <h2 className="flex items-center gap-3 text-2xl font-bold text-[#1B3022]"><Leaf className="text-[#588157]" />生態保育措施</h2>
-      <p className="mt-2 text-slate-600">依措施項目查閱執行重點、設計建議與參考照片。</p>
+      <p className="mt-2 text-slate-600">請選擇措施項目查閱執行重點與設計建議。</p>
     </header>
     <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
       <div className="relative lg:hidden">
