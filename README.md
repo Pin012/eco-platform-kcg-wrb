@@ -7,7 +7,7 @@
 - **關注議題工具板**：依設施與工程類型查詢生態關注議題。
 - **數位地圖工具**：輸入經緯度座標後，輔助檢視外部 Google My Maps 圖資。
 - **FAQ 知識庫**：整理生態檢核作業常見問題。
-- **植栽建議工具**：提供原生植栽推薦模組的前端介面雛形。
+- **生態保育措施**：依內部 Markdown 資料呈現主要措施、執行重點、設計建議與參考照片。
 - **Ecocheck AI 智慧助手入口**：目前為外部入口連結／介面入口，實際後端整合狀態需確認。
 
 > 本 README 依照目前程式碼與 `package.json` 撰寫，避免列入尚未在專案中實作的部署、資料庫或 API 流程。
@@ -56,19 +56,19 @@
     │   ├── map.md
     │   ├── faq.md
     │   ├── issues.md
-    │   └── plants.md
+    │   └── ecoplan.md
     ├── data
     │   ├── contentParsers.ts
     │   ├── faqData.ts
     │   ├── issuesData.ts
     │   ├── mapData.ts
-    │   └── plantData.ts
+    │   └── ecoplanData.ts
     └── pages
         ├── Dashboard.tsx
         ├── DigitalMap.tsx
         ├── FAQList.tsx
         ├── FocusedIssues.tsx
-        └── PlantingSuggestion.tsx
+        └── EcologicalMeasures.tsx
 ```
 
 ### 主要檔案說明
@@ -82,16 +82,16 @@
 | `src/pages/FocusedIssues.tsx` | 關注議題查詢頁 |
 | `src/pages/DigitalMap.tsx` | 數位地圖與座標查詢頁 |
 | `src/pages/FAQList.tsx` | FAQ 知識庫頁 |
-| `src/pages/PlantingSuggestion.tsx` | 植栽建議工具頁 |
+| `src/pages/EcologicalMeasures.tsx` | 生態保育措施頁 |
 | `src/content/map.md` | 更換案件時修改地圖網址、預設座標及縮放層級 |
 | `src/content/faq.md` | FAQ 知識庫內容，後續維護優先改此檔 |
 | `src/content/issues.md` | 關注議題資料，後續維護優先改此檔 |
-| `src/content/plants.md` | 植栽建議的河川、河段、目的、環境資訊、建議內容與圖片檔名，後續維護優先改此檔 |
+| `src/content/ecoplan.md` | 生態保育措施頁面文字與參考照片清單，後續維護只需改此檔 |
 | `src/data/contentParsers.ts` | 將 Markdown 內容轉成前端可用資料 |
 | `src/data/issuesData.ts` | 關注議題資料轉接檔，頁面 import 維持不變 |
 | `src/data/faqData.ts` | FAQ Markdown 轉接檔，頁面 import 維持不變 |
 | `src/data/mapData.ts` | 地圖 Markdown 設定轉接與數值檢查 |
-| `src/data/plantData.ts` | 植栽 Markdown 轉接檔 |
+| `src/data/ecoplanData.ts` | 生態保育措施 Markdown 轉接檔 |
 | `vite.config.ts` | Vite、React plugin、Tailwind plugin 與 alias 設定 |
 | `.env.example` | 環境變數範例；目前是否實際使用需確認 |
 
@@ -242,13 +242,13 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 
 ### 7.5 維護內容資料
 
-後續若只要替換地圖、FAQ、植栽建議或關注議題資料，優先修改 `src/content` 內的內容檔，不需要改 React 頁面。
+後續若只要替換地圖、FAQ、生態保育措施或關注議題資料，優先修改 `src/content` 內的內容檔，不需要改 React 頁面。
 
 | 內容 | 維護檔案 | 注意事項 |
 | --- | --- | --- |
 | 數位地圖 | `src/content/map.md` | 更換案件時只修改檔案內的 5 個值：兩張完整地圖網址、預設緯度、預設經度及預設縮放層級。保留欄位名稱、冒號與其他說明文字。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
-| 植栽建議 | `src/content/plants.md`、`public/images/planting-suggestions/` | 每筆建議使用一個 `## 河川｜河段｜目的` 區塊；河川、河段與目的不需在區塊內重複填寫，其餘欄位以每行一個 `- 欄位: 內容` 的清單格式維護。圖片依原檔名放入指定 public 資料夾，完整步驟請見 `src/content/plants.md` 開頭。 |
+| 生態保育措施 | `src/content/ecoplan.md`、`public/images/ecological-measures/` | 每個 `##` 是一項左欄頁籤；內含 `### 執行重點`、`### 設計建議`、`### 參考照片`。文字均在 Markdown 維護；照片使用 `- 中文檔名.webp｜中文說明`，完整放置與命名步驟請見圖片資料夾內的 README。 |
 | 關注議題 | `src/content/issues.md` | 每組資料使用 `## 設施名稱｜工程類型`；依範例填寫中文欄位，不需編輯 JSON。棲地與物種使用「、」分隔，每項保育原則使用一行 `- ` 清單。 |
 
 修改後請依序執行：
@@ -268,7 +268,7 @@ npm run build
 | `/issues` | `FocusedIssues` | 生態檢核工程關注議題工具 |
 | `/map` | `DigitalMap` | 生態檢核作業數位地圖工具 |
 | `/faq` | `FAQList` | 生態檢核作業 FAQ 工具 |
-| `/plants` | `PlantingSuggestion` | 植栽建議工具 |
+| `/plants` | `EcologicalMeasures` | 生態保育措施 |
 
 頁面元件採 lazy loading 載入，以降低初始 bundle 負擔。
 

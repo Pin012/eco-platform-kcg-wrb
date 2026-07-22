@@ -17,7 +17,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { faqData } from '../data/faqData';
 import { issuesData } from '../data/issuesData';
-import { plantingSuggestions } from '../data/plantData';
+import { ecologicalMeasures } from '../data/ecoplanData';
 
 const brandIconSrc = '/brand-icon.png';
 
@@ -26,7 +26,7 @@ const navItems = [
   { id: 'issues', path: '/issues', label: '關注議題工具板', icon: MapPinned },
   { id: 'map', path: '/map', label: '數位地圖工具', icon: Map },
   { id: 'faq', path: '/faq', label: 'FAQ知識庫', icon: HelpCircle },
-  { id: 'plants', path: '/plants', label: '植栽建議工具', icon: Leaf },
+  { id: 'plants', path: '/plants', label: '生態保育措施', icon: Leaf },
 ];
 
 interface SearchResult {
@@ -74,11 +74,11 @@ const siteSearchEntries: SearchResult[] = [
     path: '/issues',
     section: '關注議題',
   })),
-  ...plantingSuggestions.map((item) => ({
-    title: `${item.river}｜${item.section}｜${item.purpose}`,
+  ...ecologicalMeasures.map((item) => ({
+    title: item.title,
     description: flattenText(item),
     path: '/plants',
-    section: '植栽建議',
+    section: '生態保育措施',
   })),
 ];
 
@@ -236,7 +236,7 @@ export default function Layout() {
                   }}
                   onFocus={() => setIsSearchOpen(true)}
                   className="w-full bg-transparent text-base text-[#1B3022] placeholder:text-gray-500 outline-none"
-                  placeholder="搜尋全站、FAQ、議題或植栽..."
+                  placeholder="搜尋全站、FAQ、議題或保育措施..."
                 />
               </div>
               {isSearchOpen && searchQuery.trim() && (

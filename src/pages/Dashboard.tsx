@@ -40,8 +40,8 @@ const modules: ToolModule[] = [
   },
   {
     id: 'plants',
-    title: '植栽建議工具',
-    description: '依據工區環境特性，提供原生樹種與綠覆率改善計畫建議。',
+    title: '生態保育措施',
+    description: '彙整各項生態保育措施的執行重點、設計建議與參考照片。',
     icon: Leaf,
     path: '/plants',
     status: 'active'
