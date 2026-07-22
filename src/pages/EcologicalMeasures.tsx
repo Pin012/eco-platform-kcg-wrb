@@ -24,13 +24,13 @@ export default function EcologicalMeasures() {
   const activeMeasure = ecologicalMeasures.find((measure) => measure.id === activeId) ?? ecologicalMeasures[0];
   if (!activeMeasure) return <div className="p-8 text-slate-500">尚未建立生態保育措施。</div>;
 
-  return <div className="h-full overflow-y-auto p-4 lg:p-8">
+  return <div className="h-full overflow-x-hidden overflow-y-auto p-4 lg:p-8">
     <header className="mx-auto mb-6 max-w-7xl">
       <h2 className="flex items-center gap-3 text-2xl font-bold text-[#1B3022]"><Leaf className="text-[#588157]" />生態保育措施</h2>
       <p className="mt-2 text-slate-600">依措施項目查閱執行重點、設計建議與參考照片。</p>
     </header>
-    <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
-      <div className="relative lg:hidden">
+    <div className="mx-auto grid max-w-7xl gap-5 xl:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="relative xl:hidden">
         <label htmlFor="ecological-measure-select" className="sr-only">選擇生態保育措施</label>
         <select id="ecological-measure-select" value={activeMeasure.id} onChange={(event) => setActiveId(event.target.value)}
           className="w-full appearance-none rounded-xl border border-[#D8E2DC] bg-white py-3 pl-4 pr-11 font-medium text-slate-700 shadow-sm focus:border-[#588157] focus:outline-none focus:ring-2 focus:ring-[#588157]/20">
@@ -38,10 +38,10 @@ export default function EcologicalMeasures() {
         </select>
         <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#3A5A40]" aria-hidden="true" />
       </div>
-      <aside className="hidden self-start overflow-hidden rounded-2xl border border-[#D8E2DC] bg-white shadow-sm lg:sticky lg:top-0 lg:block">
-        <nav className="flex gap-2 overflow-x-auto p-3 lg:flex-col" aria-label="生態保育主要措施">
+      <aside className="hidden self-start overflow-hidden rounded-2xl border border-[#D8E2DC] bg-white shadow-sm xl:sticky xl:top-0 xl:block">
+        <nav className="flex flex-col gap-2 p-3" aria-label="生態保育主要措施">
           {ecologicalMeasures.map((measure) => <button key={measure.id} type="button" onClick={() => setActiveId(measure.id)}
-            className={`shrink-0 rounded-xl px-4 py-3 text-left font-medium transition-colors lg:w-full ${measure.id === activeMeasure.id ? 'bg-[#3A5A40] text-white shadow-sm' : 'text-slate-700 hover:bg-[#EDF3EA]'}`}
+            className={`w-full rounded-xl px-4 py-3 text-left font-medium transition-colors ${measure.id === activeMeasure.id ? 'bg-[#3A5A40] text-white shadow-sm' : 'text-slate-700 hover:bg-[#EDF3EA]'}`}
             aria-current={measure.id === activeMeasure.id ? 'page' : undefined}>{measure.title}</button>)}
         </nav>
       </aside>
