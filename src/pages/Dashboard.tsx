@@ -40,8 +40,8 @@ const modules: ToolModule[] = [
   },
   {
     id: 'plants',
-    title: '植栽建議工具',
-    description: '依據工區環境特性，提供原生樹種與綠覆率改善計畫建議。',
+    title: '生態保育措施',
+    description: '整理各項保育措施的執行重點、設計建議與參考照片。',
     icon: Leaf,
     path: '/plants',
     status: 'active'
@@ -245,9 +245,9 @@ export default function Dashboard() {
                    {modPlants.description}
                  </p>
                  <div className="dashboard-tool-meta hidden sm:flex flex-wrap gap-1 lg:gap-1.5 text-[8px] lg:text-xs font-bold text-[#2D4A32]">
-                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">🏔️ 海拔適應性</span>
-                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">☀️ 日照條件</span>
-                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">🌱 在地原生種</span>
+                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">📋 執行重點</span>
+                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">💡 設計建議</span>
+                     <span className="bg-white/40 px-1.5 py-0.5 rounded border border-white/20">📷 參考照片</span>
                  </div>
                </div>
              </div>
