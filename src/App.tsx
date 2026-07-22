@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard';
 const FocusedIssues = lazy(() => import('./pages/FocusedIssues'));
 const DigitalMap = lazy(() => import('./pages/DigitalMap'));
 const FAQList = lazy(() => import('./pages/FAQList'));
-const PlantingSuggestion = lazy(() => import('./pages/PlantingSuggestion'));
+const EcologicalMeasures = lazy(() => import('./pages/EcologicalMeasures'));
 
 // Fallback loader while lazy-loading components
 const PageLoader = () => (
@@ -50,7 +50,7 @@ export default function App() {
             path="plants" 
             element={
               <Suspense fallback={<PageLoader />}>
-                <PlantingSuggestion />
+                <EcologicalMeasures />
               </Suspense>
             } 
           />

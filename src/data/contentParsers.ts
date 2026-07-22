@@ -27,24 +27,42 @@ export interface PlantRecommendationGroup {
   }>;
 }
 
-export interface PlantingSuggestionContent {
-  river: string;
-  section: string;
-  purpose: string;
-  habitat: string[];
-  native: string[];
-  ecosystem: string[];
-  condition: string;
-  risk: string[];
-  cards: Array<{
-    title: string;
-    imageFile: string;
-    type: string;
-    spacing: string;
-    manage: string;
-    note: string;
-  }>;
+export interface EcologicalMeasure {
+  id: string;
+  title: string;
+  execution: string[];
+  design: string[];
+  photos: Array<{ fileName: string; caption: string }>;
 }
+
+const parseBulletSection = (block: string, heading: string) => {
+  const section = block.match(new RegExp(`^### ${heading}\\s*\\n([\\s\\S]*?)(?=^### |(?![\\s\\S]))`, 'm'))?.[1] ?? '';
+  return section
+    .split('\n')
+    .map((line) => line.match(/^[-*]\s+(.+)$/)?.[1].trim())
+    .filter((item): item is string => Boolean(item));
+};
+
+export const parseEcoplanMarkdown = (content: string): EcologicalMeasure[] => content
+  .split(/\n(?=## )/g)
+  .filter((block) => block.startsWith('## '))
+  .map((block, index) => {
+    const title = block.split('\n', 1)[0].replace(/^##\s+/, '').trim();
+    const photos = parseBulletSection(block, '參考照片')
+      .map((item) => {
+        const [fileName, ...caption] = item.split('｜');
+        return { fileName: fileName.trim(), caption: caption.join('｜').trim() };
+      })
+      .filter((photo) => photo.fileName);
+
+    return {
+      id: `measure-${index + 1}`,
+      title,
+      execution: parseBulletSection(block, '執行重點'),
+      design: parseBulletSection(block, '設計建議'),
+      photos,
+    };
+  });
 
 export const parseFrontmatter = (content: string) => {
   const match = content.match(/^---\n([\s\S]*?)\n---\n?/);
@@ -98,37 +116,4 @@ export const parseFaqMarkdown = (content: string) => {
   });
 
   return { meta: data, categories };
-};
-
-export const parsePlantMarkdown = (content: string) => {
-  const { data, body } = parseFrontmatter(content);
-  const splitList = (value: string) => value.split('、').map((item) => item.trim()).filter(Boolean);
-  const suggestions: PlantingSuggestionContent[] = body
-    .split(/\n(?=## )/g)
-    // A data heading contains exactly three parts; maintenance-guide headings are ignored.
-    .filter((block) => block.startsWith('## ') && block.split('\n', 1)[0].replace(/^##\s+/, '').split('｜').length === 3)
-    .map((block) => {
-      const lines = block.split('\n');
-      const [river, section, purpose] = lines[0].replace(/^##\s+/, '').split('｜').map((value) => value.trim());
-      return {
-        river,
-        section,
-        purpose,
-        habitat: splitList(readMetaValue(lines, '棲地類型')),
-        native: splitList(readMetaValue(lines, '溪濱原生植物舉例')),
-        ecosystem: splitList(readMetaValue(lines, '生態系統服務')),
-        condition: readMetaValue(lines, '適合環境條件'),
-        risk: splitList(readMetaValue(lines, '未來潛在風險')),
-        cards: [{
-          title: readMetaValue(lines, '卡片標題'),
-          imageFile: readMetaValue(lines, '圖片檔名'),
-          type: readMetaValue(lines, '綠美化建議植栽類型'),
-          spacing: readMetaValue(lines, '栽植間距'),
-          manage: readMetaValue(lines, '其他管理措施'),
-          note: readMetaValue(lines, '備註'),
-        }],
-      };
-    });
-
-  return { meta: data, suggestions };
 };
