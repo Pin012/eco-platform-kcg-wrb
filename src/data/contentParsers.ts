@@ -10,40 +10,14 @@ export interface FAQCategory {
   items: Array<{ question: string; answer: string }>;
 }
 
-export interface PlantRecommendationGroup {
-  id: string;
+export interface EcoPlanSection {
   title: string;
-  altitude: string;
-  sunlight: string;
-  soil: string;
-  plants: Array<{
-    name: string;
-    image: string;
-    imageFile: string;
-    type: string;
-    tags: string[];
-    summary: string;
-    maintenance: string;
-  }>;
+  items: string[];
 }
 
-export interface PlantingSuggestionContent {
-  river: string;
-  section: string;
-  purpose: string;
-  habitat: string[];
-  native: string[];
-  ecosystem: string[];
-  condition: string;
-  risk: string[];
-  cards: Array<{
-    title: string;
-    imageFile: string;
-    type: string;
-    spacing: string;
-    manage: string;
-    note: string;
-  }>;
+export interface EcoPlanMeasure {
+  title: string;
+  sections: EcoPlanSection[];
 }
 
 export const parseFrontmatter = (content: string) => {
@@ -100,35 +74,28 @@ export const parseFaqMarkdown = (content: string) => {
   return { meta: data, categories };
 };
 
-export const parsePlantMarkdown = (content: string) => {
+export const parseEcoPlanMarkdown = (content: string) => {
   const { data, body } = parseFrontmatter(content);
-  const splitList = (value: string) => value.split('、').map((item) => item.trim()).filter(Boolean);
-  const suggestions: PlantingSuggestionContent[] = body
+  const pageTitle = body.match(/^#\s+(.+)$/m)?.[1].trim() ?? '';
+  const measures: EcoPlanMeasure[] = body
     .split(/\n(?=## )/g)
-    // A data heading contains exactly three parts; maintenance-guide headings are ignored.
-    .filter((block) => block.startsWith('## ') && block.split('\n', 1)[0].replace(/^##\s+/, '').split('｜').length === 3)
+    .filter((block) => block.startsWith('## '))
     .map((block) => {
-      const lines = block.split('\n');
-      const [river, section, purpose] = lines[0].replace(/^##\s+/, '').split('｜').map((value) => value.trim());
-      return {
-        river,
-        section,
-        purpose,
-        habitat: splitList(readMetaValue(lines, '棲地類型')),
-        native: splitList(readMetaValue(lines, '溪濱原生植物舉例')),
-        ecosystem: splitList(readMetaValue(lines, '生態系統服務')),
-        condition: readMetaValue(lines, '適合環境條件'),
-        risk: splitList(readMetaValue(lines, '未來潛在風險')),
-        cards: [{
-          title: readMetaValue(lines, '卡片標題'),
-          imageFile: readMetaValue(lines, '圖片檔名'),
-          type: readMetaValue(lines, '綠美化建議植栽類型'),
-          spacing: readMetaValue(lines, '栽植間距'),
-          manage: readMetaValue(lines, '其他管理措施'),
-          note: readMetaValue(lines, '備註'),
-        }],
-      };
+      const [heading, ...contentLines] = block.split('\n');
+      const sections: EcoPlanSection[] = [];
+      let currentSection: EcoPlanSection | undefined;
+
+      contentLines.forEach((line) => {
+        if (line.startsWith('### ')) {
+          currentSection = { title: line.replace(/^###\s+/, '').trim(), items: [] };
+          sections.push(currentSection);
+        } else if (currentSection && /^[-*]\s+/.test(line)) {
+          currentSection.items.push(line.replace(/^[-*]\s+/, '').trim());
+        }
+      });
+
+      return { title: heading.replace(/^##\s+/, '').trim(), sections };
     });
 
-  return { meta: data, suggestions };
+  return { meta: data, pageTitle, measures };
 };

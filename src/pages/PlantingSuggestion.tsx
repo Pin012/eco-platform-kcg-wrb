@@ -1,87 +1,85 @@
-import { useMemo, useState, type ReactNode } from 'react';
-import { CircleAlert, Image, Leaf, Search, Sprout } from 'lucide-react';
-import { plantingSuggestions } from '../data/plantData';
+import { useState } from 'react';
+import { Camera, ImageOff, Leaf, Lightbulb, ListChecks } from 'lucide-react';
+import { ECO_PLAN_IMAGE_DIRECTORY, ecoPlanData } from '../data/ecoPlanData';
+import type { EcoPlanSection } from '../data/contentParsers';
 
-const TagBlock = ({ label, values, tone = 'green' }: { label: string; values: string[]; tone?: 'green' | 'warm' }) => (
-  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm">
-    <h3 className="mb-4 text-base font-bold text-[#667085]">{label}</h3>
-    <div className="flex flex-wrap gap-2.5">
-      {values.length > 0 ? values.map((value) => (
-        <span
-          key={value}
-          className={`rounded-full border px-4 py-2 text-sm font-medium ${tone === 'warm' ? 'border-[#E8D8CF] bg-[#F8F3F0] text-[#6B5144]' : 'border-[#DFE6E9] bg-[#EEF2F5] text-[#344E41]'}`}
-        >
-          {value}
-        </span>
-      )) : <span className="text-gray-400">—</span>}
+const splitLabel = (item: string) => {
+  const match = item.match(/^([^：:]+)[：:]\s*(.+)$/);
+  return match ? { label: match[1].trim(), content: match[2].trim() } : { content: item };
+};
+
+const AdviceList = ({ section }: { section: EcoPlanSection }) => (
+  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm sm:p-6">
+    <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#3A5A40]">
+      {section.title.includes('執行') ? <ListChecks className="h-5 w-5" /> : <Lightbulb className="h-5 w-5" />}
+      {section.title}
+    </h3>
+    <ul className="space-y-3 text-gray-700">
+      {section.items.map((item, index) => {
+        const value = splitLabel(item);
+        return (
+          <li key={`${item}-${index}`} className="flex items-start gap-2.5 leading-relaxed">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#A3B18A]" />
+            <span>
+              {value.label && <strong className="mr-2 inline-flex rounded-full bg-[#E7EFE7] px-3 py-0.5 text-sm font-bold text-[#3A5A40]">{value.label}</strong>}
+              {value.content}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+);
+
+const PhotoGallery = ({ section }: { section: EcoPlanSection }) => (
+  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm sm:p-6">
+    <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#3A5A40]"><Camera className="h-5 w-5" />{section.title}</h3>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {section.items.map((item, index) => {
+        const { label, content: fileName } = splitLabel(item);
+        return (
+          <figure key={`${fileName}-${index}`} className="overflow-hidden rounded-xl border border-[#D8E2DC] bg-[#F2F5F0]">
+            <div className="relative aspect-[4/3]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center text-gray-400"><ImageOff /><span className="text-sm">尚未放置：{fileName}</span></div>
+              <img src={`${ECO_PLAN_IMAGE_DIRECTORY}${fileName}`} alt={label || section.title} className="absolute inset-0 h-full w-full object-cover" loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+            </div>
+            {label && <figcaption className="border-t border-[#D8E2DC] bg-white px-4 py-3 text-sm font-medium text-gray-700">{label}</figcaption>}
+          </figure>
+        );
+      })}
     </div>
   </section>
 );
 
-const DetailBlock = ({ label, children, warning = false }: { label: string; children: ReactNode; warning?: boolean }) => (
-  <section className="rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm sm:p-6">
-    <h3 className="mb-3 flex items-center gap-2 font-bold text-[#3A5A40]">
-      {warning ? <CircleAlert className="h-5 w-5 text-[#B7791F]" /> : <Sprout className="h-5 w-5 text-[#588157]" />}
-      {label}
-    </h3>
-    <div className="leading-relaxed text-gray-600">{children}</div>
-  </section>
-);
-
 export default function PlantingSuggestion() {
-  const [river, setRiver] = useState('');
-  const [section, setSection] = useState('');
-  const [purpose, setPurpose] = useState('');
-  const [result, setResult] = useState<(typeof plantingSuggestions)[number] | null>(null);
-
-  const rivers = useMemo(() => [...new Set(plantingSuggestions.map((item) => item.river))], []);
-  const sections = useMemo(() => [...new Set(plantingSuggestions.filter((item) => !river || item.river === river).map((item) => item.section))], [river]);
-  const purposes = useMemo(() => [...new Set(plantingSuggestions.filter((item) => (!river || item.river === river) && (!section || item.section === section)).map((item) => item.purpose))], [river, section]);
-
-  const changeRiver = (value: string) => { setRiver(value); setSection(''); setPurpose(''); setResult(null); };
-  const changeSection = (value: string) => { setSection(value); setPurpose(''); setResult(null); };
-  const search = () => setResult(plantingSuggestions.find((item) => (!river || item.river === river) && (!section || item.section === section) && (!purpose || item.purpose === purpose)) ?? null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeMeasure = ecoPlanData.measures[activeIndex];
 
   return (
     <div className="w-full p-4 lg:p-8">
       <header className="mb-6">
-        <h2 className="flex items-center gap-3 text-2xl font-bold text-[#1B3022]"><Leaf className="text-[#b8860b]" />工區植栽建議工具</h2>
-        <p className="mt-2 text-gray-500">請依序選擇河川、河段位置與栽植目的，取得工區植栽及管理建議。</p>
+        <h2 className="flex items-center gap-3 text-2xl font-bold text-[#1B3022]"><Leaf className="text-[#588157]" />{ecoPlanData.pageTitle}</h2>
+        <p className="mt-2 text-gray-500">選擇主要措施，查看執行重點、設計建議與參考照片。</p>
       </header>
 
-      <div className="mb-6 grid grid-cols-1 items-end gap-4 rounded-2xl border border-[#D8E2DC] bg-white p-5 shadow-sm md:grid-cols-2 xl:grid-cols-[1fr_1.35fr_1.15fr_auto]">
-        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">河川名稱<select value={river} onChange={(e) => changeRiver(e.target.value)} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇河川名稱</option>{rivers.map((value) => <option key={value}>{value}</option>)}</select></label>
-        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">河段位置<select value={section} onChange={(e) => changeSection(e.target.value)} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇河段位置</option>{sections.map((value) => <option key={value}>{value}</option>)}</select></label>
-        <label className="flex flex-col gap-2 text-sm font-bold text-gray-500">栽植目的<select value={purpose} onChange={(e) => { setPurpose(e.target.value); setResult(null); }} className="w-full rounded-xl border border-gray-200 bg-[#FBFBFB] px-3 py-2.5 font-normal text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#A3B18A]"><option value="">選擇栽植目的</option>{purposes.map((value) => <option key={value}>{value}</option>)}</select></label>
-        <button onClick={search} className="flex items-center justify-center gap-2 rounded-xl bg-[#3A5A40] px-6 py-2.5 font-bold text-white shadow-sm transition-colors hover:bg-[#2D4A32]"><Search size={18} />搜尋</button>
-      </div>
+      <nav className="mb-6 flex gap-2 overflow-x-auto border-b border-[#C9D5CC] pb-2" aria-label="生態保育主要措施">
+        {ecoPlanData.measures.map((measure, index) => (
+          <button key={measure.title} type="button" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index} className={`shrink-0 rounded-t-xl px-4 py-3 text-sm font-bold transition-colors ${activeIndex === index ? 'bg-[#3A5A40] text-white shadow-sm' : 'bg-white text-[#52665A] hover:bg-[#E7EFE7]'}`}>
+            {measure.title}
+          </button>
+        ))}
+      </nav>
 
-      {!result ? <div className="rounded-xl border border-dashed border-gray-300 bg-white p-12 text-center text-gray-500">請選擇條件後按下「搜尋」查看植栽建議。</div> : <>
-        <div className="mb-8 space-y-5">
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-            <TagBlock label="棲地類型" values={result.habitat} />
-            <TagBlock label="溪濱原生植物舉例" values={result.native} tone="warm" />
-            <TagBlock label="生態系統服務" values={result.ecosystem} />
-          </div>
+      {activeMeasure && (
+        <article>
+          <h2 className="mb-5 text-2xl font-bold text-[#344E41]">{activeMeasure.title}</h2>
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-            <DetailBlock label="適合環境條件">{result.condition || '—'}</DetailBlock>
-            <DetailBlock label="未來潛在風險" warning>
-              {result.risk.length > 0 ? <ul className="space-y-2">{result.risk.map((risk) => <li key={risk} className="flex gap-2"><span className="text-[#B7791F]">•</span><span>{risk}</span></li>)}</ul> : '—'}
-            </DetailBlock>
+            {activeMeasure.sections.map((section, index) => section.title.includes('照片')
+              ? <div key={`${section.title}-${index}`} className="lg:col-span-2"><PhotoGallery section={section} /></div>
+              : <div key={`${section.title}-${index}`}><AdviceList section={section} /></div>)}
           </div>
-        </div>
-        <div className="grid grid-cols-1 gap-6">
-          {result.cards.map((card) => <article key={card.title} className="grid w-full grid-cols-1 overflow-hidden rounded-2xl border border-[#E5D49D] bg-[#fffdf4] shadow-sm md:grid-cols-[minmax(220px,32%)_1fr]">
-            <div className="relative flex aspect-[16/7] max-h-56 items-center justify-center border-b border-[#fbc02d]/50 bg-white/70 text-[#b8860b] md:aspect-auto md:max-h-none md:min-h-full md:border-b-0 md:border-r">
-              <div className="text-center"><Image className="mx-auto mb-2" size={36} /><span className="font-bold">圖片預留位置</span></div>
-              <img src={card.image} alt={`${card.title}植栽建議圖片`} className="absolute inset-0 h-full w-full object-cover" loading="lazy" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
-            </div>
-            <div className="p-5"><h3 className="mb-4 text-xl font-bold tracking-wide text-[#b8860b]">{card.title}</h3>
-              {[['綠美化建議植栽類型', card.type], ['栽植間距', card.spacing], ['其他管理措施', card.manage], ['備註', card.note]].map(([label, value]) => <p key={label} className="mb-3 leading-relaxed"><strong className="mr-1 rounded bg-[#ffe082] px-1 py-0.5 text-[#8a6508]">{label}：</strong>{value}</p>)}
-            </div>
-          </article>)}
-        </div>
-      </>}
+        </article>
+      )}
     </div>
   );
 }
