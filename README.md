@@ -44,6 +44,12 @@
 ├── tsconfig.json
 ├── vite.config.ts
 ├── .env.example
+├── public
+│   ├── brand-icon.png
+│   └── images
+│       └── ecological-measures
+│           ├── README.md
+│           └── 重要棲地保留-01.webp
 └── src
     ├── App.tsx
     ├── main.tsx
@@ -94,6 +100,85 @@
 | `src/data/ecoplanData.ts` | 生態保育措施 Markdown 轉接檔 |
 | `vite.config.ts` | Vite、React plugin、Tailwind plugin 與 alias 設定 |
 | `.env.example` | 環境變數範例；目前是否實際使用需確認 |
+
+### 2.1 圖片檔案路徑與載入方式（2026-07-30 依目前程式碼確認）
+
+目前專案**沒有後台圖片上傳頁面、上傳 API 或雲端儲存服務**。這裡的「上傳圖片」是指：將圖片放進 Git 專案的 `public/` 目錄、更新內容檔，經測試後提交 Git，再由既有部署流程發布。部署平台與 production 發布指令目前在專案內均**需確認**，不可直接假設是 Cloudflare、Supabase 或其他服務。
+
+| 圖片種類 | 實際檔案或來源 | 程式使用位置 | 維護方式 |
+| --- | --- | --- | --- |
+| 網站品牌圖示（瀏覽器頁籤、Apple touch icon、頁首） | `public/brand-icon.png` | `index.html`、`src/components/Layout.tsx` | 用同名 PNG 覆蓋；程式固定讀取 `/brand-icon.png` |
+| 生態保育措施參考照片 | `public/images/ecological-measures/*` | 清單寫在 `src/content/ecoplan.md`；`src/data/ecoplanData.ts` 組成 `/images/ecological-measures/<檔名>`；`src/pages/EcologicalMeasures.tsx` 顯示 | 將 JPG、PNG 或 WebP 放進該資料夾，再於 Markdown 登記完全相同的檔名與說明 |
+| 首頁數位地圖卡片背景 | Unsplash 外部網址，沒有存放在本專案 | `src/pages/Dashboard.tsx` | 目前只能修改程式碼中的網址；不是本專案的上傳檔案，外部網址可用性與授權仍需維護者確認 |
+| 首頁網格背景 | 程式碼內嵌的 SVG data URL，沒有獨立圖片檔 | `src/pages/Dashboard.tsx` | 修改程式碼；不需也不能透過圖片資料夾上傳 |
+| 介面功能圖示與地形線 | `lucide-react` 元件與 Canvas 即時繪製，沒有獨立圖片檔 | `src/pages/*`、`src/components/*` | 修改元件程式碼；不是圖片上傳範圍 |
+
+Vite 會在建置時把 `public/` 的內容複製到 `dist/` 根目錄。因此原始檔 `public/brand-icon.png` 的網站路徑是 `/brand-icon.png`，而 `public/images/ecological-measures/照片.webp` 的網站路徑是 `/images/ecological-measures/照片.webp`。請勿在 Markdown 中填入 `public/`，也不要手動修改或提交建置產物 `dist/`。
+
+#### A. 新增生態保育措施照片（目前唯一的內容圖片新增方式）
+
+以下指令都在專案根目錄 `eco-platform-kcg-wrb` 執行：
+
+1. 先準備圖片。支援 JPG、PNG 或 WebP；建議使用 WebP、橫式約 4:3、寬度至少 1200 像素。
+2. 將圖片命名為「`措施名稱-兩位數流水號.副檔名`」，例如 `重要棲地保留-02.webp`。檔名不可包含 `/`、`\`、`:`、`*`、`?`、`"`、`<`、`>`、`|`。
+3. 將本機圖片複製到專案；請把範例來源路徑換成你的實際檔案位置：
+
+   ```bash
+   cp "/請替換成圖片所在路徑/重要棲地保留-02.webp" "public/images/ecological-measures/重要棲地保留-02.webp"
+   ```
+
+4. 開啟 `src/content/ecoplan.md`，在對應措施的 `### 參考照片` 下加入一行：
+
+   ```markdown
+   - 重要棲地保留-02.webp｜請填寫照片說明
+   ```
+
+   `｜` 前的檔名必須與實際檔案逐字相同（包含中文字、流水號、副檔名與大小寫）。請直接填檔名，不要加 `public/` 或完整網址。同一措施可逐行加入多張照片；沒有照片時保留空白的 `### 參考照片`。
+5. 安裝套件（尚未安裝時才需要），再依序檢查：
+
+   ```bash
+   npm ci
+   npm run lint
+   npm run build
+   npm run dev
+   ```
+
+6. 在瀏覽器開啟 `http://localhost:3000/plants`，選取對應措施，確認圖片、裁切與說明。若顯示預留圖示，先核對步驟 3 的實際檔名與步驟 4 的 Markdown 檔名。
+7. 確認無誤後提交 Git；`<分支名稱>` 與提交訊息可依團隊規範調整：
+
+   ```bash
+   git status
+   git switch -c <分支名稱>
+   git add public/images/ecological-measures/ src/content/ecoplan.md
+   git commit -m "新增生態保育措施參考照片"
+   git push -u origin <分支名稱>
+   ```
+
+8. 到專案實際使用的 Git 平台（例如 GitHub）建立 Pull Request，審核合併後再走團隊既有發布流程。**目前 Git remote、代管平台、登入方式、token 建立方式與 production 部署流程均未記錄在此專案，需向專案管理者確認後才能執行 `git push` 與發布。**
+
+更完整的照片命名規則也可查看 `public/images/ecological-measures/README.md`。
+
+#### B. 更換品牌圖示
+
+1. 準備 PNG 圖片並命名為 `brand-icon.png`。
+2. 先備份現有檔案，再用新檔覆蓋：
+
+   ```bash
+   cp public/brand-icon.png public/brand-icon.png.bak
+   cp "/請替換成新圖示所在路徑/brand-icon.png" public/brand-icon.png
+   npm run lint
+   npm run build
+   npm run dev
+   ```
+
+3. 開啟 `http://localhost:3000`，確認瀏覽器頁籤與頁首圖示。確認完成後刪除本機備份 `public/brand-icon.png.bak`，不要將備份加入 Git。
+4. 依前一節步驟 7、8 提交 Pull Request 與發布；不需修改檔名或程式路徑。
+
+#### 圖片修改風險與回滾
+
+- **風險**：檔名不一致會顯示預留圖示；大檔案會增加下載量；直接刪除仍被 Markdown 引用的照片會造成破圖；外部 Unsplash 圖片可能因網路、來源變更或授權狀態而無法顯示。
+- **回滾尚未提交的變更**：先用 `git status` 確認，再用 `git restore src/content/ecoplan.md public/brand-icon.png` 還原追蹤中的檔案；新加入且尚未追蹤的圖片請確認檔名後手動刪除。
+- **回滾已合併變更**：在 Git 平台對該次 Pull Request 執行 Revert，或由維護者執行 `git revert <需回滾的提交 ID>`，重新測試後再依既有流程發布；不要用強制推送改寫 production 分支歷史。
 
 ---
 
