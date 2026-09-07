@@ -424,6 +424,8 @@ src/data/faqData.ts
 
 ## 10. 外部服務與需確認事項
 
+若後續要加入登入或權限限制，請先閱讀 [`docs/authentication-and-authorization.md`](docs/authentication-and-authorization.md)。該文件依目前「純前端、尚無後端與資料庫設定」的架構，整理最小導入方案、使用者操作流程、必要設定、風險與回滾方式；在部署平台與權限粒度確認前，不應直接安裝驗證套件。
+
 以下項目目前在專案中有線索，但尚未看到完整實作或設定檔，因此不可直接假設已可使用。
 
 ### 10.1 Gemini / Google AI
