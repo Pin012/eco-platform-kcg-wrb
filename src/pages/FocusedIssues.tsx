@@ -99,9 +99,7 @@ export default function FocusedIssues() {
              <MapPinned className="w-5 h-5 sm:w-7 sm:h-7 text-[#588157]" />
              生態檢核作業工程關注議題工具
           </h2>
-          <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
-            Ver 1.0 (最後更新時間: 2026-04-20)
-          </p>
+
         </div>
       </motion.div>
 
