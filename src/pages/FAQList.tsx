@@ -83,7 +83,7 @@ export default function FAQList() {
              生態檢核作業 FAQ 工具
           </h2>
           <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
-            總題數：{faqData.reduce((total, category) => total + category.items.length, 0)}｜最後更新時間：{faqMeta.lastUpdated}
+            總題數：{faqData.reduce((total, category) => total + category.items.length, 0)}
           </p>
         </div>
       </motion.div>
