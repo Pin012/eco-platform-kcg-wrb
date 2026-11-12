@@ -27,9 +27,7 @@ const readNumberSetting = (label: string, min?: number, max?: number) => {
 };
 
 export const mapSettings = {
-  firstMapUrl: readSetting('第一張地圖網址'),
-  secondMapUrl: readSetting('第二張地圖網址'),
   defaultLatitude: readNumberSetting('預設緯度', -90, 90),
   defaultLongitude: readNumberSetting('預設經度', -180, 180),
-  defaultZoom: readNumberSetting('預設縮放層級'),
+  defaultZoom: readNumberSetting('預設縮放層級', 0, 19),
 };

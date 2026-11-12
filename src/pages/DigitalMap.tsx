@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Map, Search, Target, AlertCircle } from 'lucide-react';
+import RepositoryMap from '../components/RepositoryMap';
 import { mapSettings } from '../data/mapData';
 
 export default function DigitalMap() {
@@ -30,7 +31,7 @@ export default function DigitalMap() {
     setError('');
     setLat(y);
     setLng(x);
-    // Force maps to re-render to apply the new center via URL
+    // Recenter even when the same coordinates are submitted again.
     setMapKeys(prev => prev + 1);
   };
 
@@ -110,50 +111,7 @@ export default function DigitalMap() {
         </div>
       )}
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.99 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
-        className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 mb-10"
-      >
-        {/* Map 1 */}
-        <div className="flex-1 flex flex-col space-y-3">
-          <h2 className="text-center text-sm font-bold text-[#1B3022]">本地圖可初步用於快速判別工程是否需辦理生態檢核</h2>
-          <div className="relative flex-1 w-full rounded-2xl overflow-hidden border border-[#D8E2DC] shadow-sm bg-gray-50 min-h-[300px] lg:min-h-[500px]">
-            <iframe
-              key={`map1-${mapKeys}`}
-              src={`${mapSettings.firstMapUrl}&ll=${lat},${lng}&z=${mapSettings.defaultZoom}`}
-              title="本地圖可初步用於快速判別工程是否需辦理生態檢核"
-              className="absolute inset-0 w-full h-full border-none"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-            {/* Center Pin Overlay */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full text-3xl pointer-events-none drop-shadow-md select-none z-10" aria-label="輸入座標位置">
-              📍
-            </div>
-          </div>
-        </div>
-
-        {/* Map 2 */}
-        <div className="flex-1 flex flex-col space-y-3">
-          <h2 className="text-center text-sm font-bold text-[#1B3022]">本地圖可用於進一步確認工程範圍內與其周遭的生態資訊</h2>
-          <div className="relative flex-1 w-full rounded-2xl overflow-hidden border border-[#D8E2DC] shadow-sm bg-gray-50 min-h-[300px] lg:min-h-[500px]">
-            <iframe
-              key={`map2-${mapKeys}`}
-              src={`${mapSettings.secondMapUrl}&ll=${lat},${lng}&z=${mapSettings.defaultZoom}`}
-              title="本地圖可用於進一步確認工程範圍內與其周遭的生態資訊"
-              className="absolute inset-0 w-full h-full border-none"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-            {/* Center Pin Overlay */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full text-3xl pointer-events-none drop-shadow-md select-none z-10" aria-label="輸入座標位置">
-              📍
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      <RepositoryMap latitude={lat} longitude={lng} revision={mapKeys} />
     </div>
   );
 }
