@@ -1,3 +1,10 @@
 {
-  "layers": []
+  "layers": [
+    {
+      "id": "nen_zones",
+      "name": "全國國土綠網分區圖",
+      "file": "全國國土綠網分區圖.zip",
+      "color": "#588157"
+    }
+  ]
 }
