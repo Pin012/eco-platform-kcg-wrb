@@ -146,9 +146,10 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
           onClick={() => toggle(layer.id)}
           className="w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-wait"
           style={{
-            backgroundColor: layer.visible ? `${layer.color}26` : '#ffffff',
+            backgroundColor: layer.visible ? layer.color : '#ffffff',
             borderColor: layer.visible ? layer.color : '#e5e7eb',
-            color: '#1B3022',
+            color: layer.visible ? '#ffffff' : '#1B3022',
+            fontWeight: layer.visible ? 700 : 400,
           }}
         >{layer.name}</button>
         {layer.status === 'error' && <p role="alert" className="text-xs text-red-700">{layer.error}</p>}
