@@ -331,7 +331,7 @@ Vite 會顯示可開啟的本機網址，請依終端機輸出為準。
 
 | 內容 | 維護檔案 | 注意事項 |
 | --- | --- | --- |
-| 數位地圖 | `src/content/map.md` | 預設中心維護於此檔；共用圖資放在 `public/maps/` 並登記於 `layers.json`，詳細步驟見 [圖資維護說明](public/maps/README.md)。提交 GitHub 後須重新部署才會更新網站。 |
+| 數位地圖 | `src/content/map.md` | 預設中心維護於此檔；共用圖資放在 `public/maps/` 並登記於 `layers.md`，詳細步驟見 [圖資維護說明](public/maps/README.md)。提交 GitHub 後須重新部署才會更新網站。 |
 | FAQ 知識庫 | `src/content/faq.md` | 每個分類使用 `##`，每題使用 `###`；答案可保留目前頁面已支援的 HTML 片段。 |
 | 生態保育措施 | `src/content/ecoplan.md`、`public/images/ecological-measures/` | 每個 `##` 是一項左欄頁籤；內含 `### 執行重點`、`### 設計建議`、`### 參考照片`。文字均在 Markdown 維護；照片使用 `- 中文檔名.webp｜中文說明`，完整放置與命名步驟請見圖片資料夾內的 README。 |
 | 關注議題 | `src/content/issues.md` | 每組資料使用 `## 設施名稱｜工程類型`；依範例填寫中文欄位，不需編輯 JSON。棲地與物種使用「、」分隔，每項保育原則使用一行 `- ` 清單。 |

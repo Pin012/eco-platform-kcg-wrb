@@ -71,9 +71,9 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
     async function load() {
       try {
         const base = `${import.meta.env.BASE_URL}maps/`;
-        const response = await fetch(`${base}layers.json`, { signal: controller.signal, cache: 'no-cache' });
+        const response = await fetch(`${base}layers.md`, { signal: controller.signal, cache: 'no-cache' });
         if (!response.ok) throw new Error(`無法讀取圖層清單（HTTP ${response.status}）。`);
-        const configs = parseLayerManifest(await response.json());
+        const configs = parseLayerManifest(await response.text());
         if (controller.signal.aborted) return;
         setLayers(configs.map(config => ({ ...config, status: 'loading', visible: true })));
         await Promise.all(configs.map(async config => {
@@ -134,16 +134,23 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
   return <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)] pb-8">
     <aside className="rounded-2xl border border-[#D8E2DC] bg-white p-5 space-y-4">
       <h3 className="font-bold text-[#1B3022]">共用圖層</h3>
-      <p className="text-xs text-gray-500">勾選圖層顯示範圍，點選圖徵查看屬性。橘色圓點為輸入座標。</p>
+      <p className="text-xs text-gray-500">點選圖層標籤切換顯示範圍，點選圖徵查看屬性。橘色圓點為輸入座標。</p>
       {loading && <p role="status" className="text-sm text-gray-600">正在載入圖資…</p>}
       {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
       {!loading && !error && layers.length === 0 && <p className="text-sm text-gray-600">尚未加入共用圖資，請由維護者更新圖層清單。</p>}
-      {layers.map(layer => <div key={layer.id} className="space-y-1 border-b border-gray-100 pb-3">
-        <label className="flex gap-2 items-center text-sm">
-          <input type="checkbox" checked={layer.visible} disabled={layer.status !== 'ready'} onChange={() => toggle(layer.id)} />
-          <span className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: layer.color }} />{layer.name}
-        </label>
-        {layer.status === 'ready' && <p className="text-xs text-gray-500">{layer.count} 筆圖徵</p>}
+      {layers.map(layer => <div key={layer.id} className="space-y-1">
+        <button
+          type="button"
+          aria-pressed={layer.visible}
+          disabled={layer.status !== 'ready'}
+          onClick={() => toggle(layer.id)}
+          className="w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-wait"
+          style={{
+            backgroundColor: layer.visible ? `${layer.color}26` : '#ffffff',
+            borderColor: layer.visible ? layer.color : '#e5e7eb',
+            color: '#1B3022',
+          }}
+        >{layer.name}</button>
         {layer.status === 'error' && <p role="alert" className="text-xs text-red-700">{layer.error}</p>}
       </div>)}
       <button type="button" onClick={fit} disabled={!layers.some(layer => layer.status === 'ready' && layer.visible && layer.count)} className="w-full rounded-lg bg-[#3A5A40] px-3 py-2 text-sm text-white disabled:opacity-40">縮放至圖層範圍</button>
