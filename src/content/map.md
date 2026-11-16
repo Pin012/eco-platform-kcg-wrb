@@ -1,6 +1,6 @@
 # 數位地圖工具設定
 
-圖資由維護者提交至 `public/maps/`，並在 `public/maps/layers.json` 登記。
+圖資由維護者提交至 `public/maps/`，並在 `public/maps/layers.md` 登記。
 網站部署後，所有使用者讀取同一版本的圖資；不再使用 Google My Maps。
 完整 SHP 上傳與座標系統注意事項請見 `public/maps/README.md`。
 
