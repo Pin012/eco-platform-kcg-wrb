@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import { parseLayerManifest, type MapLayerConfig } from '../data/mapLayers';
 import { mapSettings } from '../data/mapData';
 
-type LayerState = MapLayerConfig & { status: 'loading' | 'ready' | 'error'; visible: boolean; count?: number; error?: string };
+type LayerState = MapLayerConfig & { status: 'loading' | 'ready' | 'error'; visible: boolean; error?: string };
 
 function validateFeatures(value: unknown): FeatureCollection {
   const data = value as FeatureCollection;
@@ -102,7 +102,7 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
               },
             }).addTo(instance);
             overlays.current.set(config.id, overlay);
-            setLayers(previous => previous.map(item => item.id === config.id ? { ...item, status: 'ready', count: collection.features.length } : item));
+            setLayers(previous => previous.map(item => item.id === config.id ? { ...item, status: 'ready' } : item));
           } catch (error) {
             if (!controller.signal.aborted) setLayers(previous => previous.map(item => item.id === config.id ? { ...item, status: 'error', error: error instanceof Error ? error.message : '讀取失敗。' } : item));
           }
@@ -122,14 +122,6 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
       if (layer && map.current) { if (item.visible) map.current.removeLayer(layer); else layer.addTo(map.current); }
       return { ...item, visible: !item.visible };
     }));
-  };
-  const fit = () => {
-    const bounds = L.latLngBounds([]);
-    layers.filter(item => item.visible).forEach(item => {
-      const layer = overlays.current.get(item.id);
-      if (layer?.getBounds().isValid()) bounds.extend(layer.getBounds());
-    });
-    if (bounds.isValid()) map.current?.fitBounds(bounds, { padding: [24, 24], maxZoom: 16 });
   };
   return <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)] pb-8">
     <aside className="rounded-2xl border border-[#D8E2DC] bg-white p-5 space-y-4">
@@ -154,7 +146,6 @@ export default function RepositoryMap({ latitude, longitude, revision }: { latit
         >{layer.name}</button>
         {layer.status === 'error' && <p role="alert" className="text-xs text-red-700">{layer.error}</p>}
       </div>)}
-      <button type="button" onClick={fit} disabled={!layers.some(layer => layer.status === 'ready' && layer.visible && layer.count)} className="w-full rounded-lg bg-[#3A5A40] px-3 py-2 text-sm text-white disabled:opacity-40">縮放至圖層範圍</button>
       {(error || layers.some(layer => layer.status === 'error')) && <button type="button" onClick={() => setAttempt(value => value + 1)} className="text-sm underline">重新載入圖資</button>}
     </aside>
     <div className="min-w-0 space-y-2">
